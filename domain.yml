@@ -1,0 +1,157 @@
+version: "2.0"
+
+
+intents:
+  - mood_curr
+
+
+slots:
+  - mood:
+    type: rasa.shared.core.slots.TextSlot
+    initial_value: ''
+    auto_fill: true
+    influence_conversation: false
+  - user_name:
+    type: rasa.shared.core.slots.TextSlot
+    initial_value: ''
+    auto_fill: true
+    influence_conversation: false
+    
+
+responses:
+
+
+  ### Intro
+  utter_greet_first_time:
+  - text: "Hey there, I'm Lou."
+  utter_ask_name:
+  - text: "How can I call you?"
+  utter_confirm_name:
+  - text: "Thanks, it's nice to meet you {user_name}."
+  utter_purpose_1:
+  - text: "I have mentioned by name, but let me also tell you bit about what I do: My goal is to help people prepare for quitting smoking. And since becoming more physically active may make it easier to quit smoking, I also want to prepare prepare for becoming more physically active."
+  utter_purpose_2:
+  - text: "Why prepare to quit? Because proper preparation can help to quit successfully."
+  utter_purpose_3:
+  - text: "And how do I prepare people? I propose activities that help build the competencies needed for quitting successfully."
+  utter_purpose_4:
+  - text: "Ultimately, I want to be able to propose activities that match the situation a person is in."
+  utter_purpose_5:
+  - text: "And this is why you are here: I want to learn how an activity I propose helps you in your specific situation."
+  utter_prompt_usage:
+  - text: "Before we start, let me explain how you can communicate with me."
+  utter_explain_usage:
+  - buttons:
+    - payload: /confirm
+      title: "Yes, that's clear"
+    - payload: /confirm
+      title: "Nice, sounds easy enough!"
+    text: "Most of the time, you can just click on one of the buttons like you already did. If no buttons appear, just make use of the text field below."
+  
+  ### Mood
+  utter_ask_for_mood:
+  - buttons:
+    - payload: /mood_curr{{"mood":"satisfied"}}
+      title: Satisfied
+    - payload: /mood_curr{{"mood":"pleased"}}
+      title: Pleased
+    - payload: /mood_curr{{"mood":"delighted"}}
+      title: Delighted
+    - payload: /mood_curr{{"mood":"happy"}}
+      title: Happy
+    - payload: /mood_curr{{"mood":"glad"}}
+      title: Glad
+    - payload: /mood_curr{{"mood":"excited"}}
+      title: Excited
+    - payload: /mood_curr{{"mood":"aroused"}}
+      title: Aroused
+    - payload: /mood_curr{{"mood":"astonished"}}
+      title: Astonished
+    - payload: /mood_curr{{"mood":"alarmed"}}
+      title: Alarmed
+    - payload: /mood_curr{{"mood":"angry"}}
+      title: Angry
+    - payload: /mood_curr{{"mood":"annoyed"}}
+      title: Annoyed
+    - payload: /mood_curr{{"mood":"distressed"}}
+      title: Distressed
+    - payload: /mood_curr{{"mood":"afraid"}}
+      title: Afraid
+    - payload: /mood_curr{{"mood":"frustrated"}}
+      title: Frustrated
+    - payload: /mood_curr{{"mood":"miserable"}}
+      title: Miserable
+    - payload: /mood_curr{{"mood":"depressed"}}
+      title: Depressed
+    - payload: /mood_curr{{"mood":"gloomy"}}
+      title: Gloomy
+    - payload: /mood_curr{{"mood":"tense"}}
+      title: Tense
+    - payload: /mood_curr{{"mood":"droopy"}}
+      title: Droopy
+    - payload: /mood_curr{{"mood":"sad"}}
+      title: Sad
+    - payload: /mood_curr{{"mood":"tired"}}
+      title: Tired
+    - payload: /mood_curr{{"mood":"bored"}}
+      title: Bored
+    - payload: /mood_curr{{"mood":"sleepy"}}
+      title: Sleepy
+    - payload: /mood_curr{{"mood":"serene"}}
+      title: Serene
+    - payload: /mood_curr{{"mood":"relaxed"}}
+      title: Relaxed
+    - payload: /mood_curr{{"mood":"calm"}}
+      title: Calm
+    - payload: /mood_curr{{"mood":"tranquil"}}
+      title: Tranquil
+    - payload: /mood_curr{{"mood":"content"}}
+      title: Content
+    - payload: /mood_curr{{"mood":"neutral"}}
+      title: Neutral
+    text: How are you feeling today?
+  utter_mood_positive_valence_high_arousal_quadrant:
+  - text: "Yay, always good to hear that somebody is feeling {mood}!"
+  - text: "Awesome, you must be having a good day!"
+  - text: "Fantastic, that's very good to hear!"
+  - text: "Great, I'm happy to hear that that you're feeling {mood}!"
+  - text: "Fantastic, I'm happy to hear that!"
+  utter_mood_positive_valence_low_arousal_quadrant:
+  - text: "Nice, that's good to hear."
+  - text: "Nice, I'm glad to hear that you're feeling {mood}."
+  - text: "Nice, I'm glad to hear that."
+  - text: "Nice, that's always good to hear."
+  utter_mood_negative_valence_low_arousal_quadrant:
+  - text: I hate to hear that you're feeling {mood}. I hope you feel better soon!
+      Meanwhile, maybe this session can help to cheer you up a bit.
+  - text: "Aww it doesn't feel good to hear that. Hopefully you feel better soon!"
+  - text: "Oh I'm so sorry that you're not having a good day. I hope it gets better soon and that I can cheer you up a little!"
+  - text: That's a shame that you're not feeling well today. Hopefully you feel better
+      soon!
+  - text: "So sorry about that! Feel better soon - hopefully talking about preparing to quit smoking and becoming more physically active can help a bit."
+  utter_mood_negative_valence_high_arousal_quadrant:
+  - text: "I'm really sorry to hear that you're feeling {mood}. I hope you feel better soon!"
+  - text: "Aww I'm so sorry to hear this. Hopefully you feel less {mood} soon!"
+  - text: "Oh that's a shame that you're not having a good day. I hope it gets better soon and that I can distract you a bit."
+  - text: I hate to hear that today isn't a good day for you. Hopefully you feel better
+      soon and that it's okay to proceed with this session!
+  - text: "Awww what a shame. Hopefully you feel less {mood} soon!"
+  utter_mood_neutral:
+  - text: "I see, I guess that's not too bad."
+  - text: "Ah, sounds like you're having a pretty average day."
+  - text: "Hm, that's not too bad I guess."
+  - text: "I see, seems like you're doing okay then."
+  - text: "Ah well, could be worse I guess."
+  
+  
+  utter_error_close_session:
+  - text: "*PLEASE CLOSE THIS WINDOW. ANY FURTHER TYPING IN THIS CHAT RENDERS THIS SESSION INVALID.*"
+ 
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+
+
+actions:
+- action_freetext_user_name
