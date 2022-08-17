@@ -6,8 +6,11 @@ stories:
   steps:
   - intent: start_session1
   - action: utter_greet_first_time
-  - action: utter_ask_name
-  - action: action_freetext_user_name
+  - action: name_form
+  - active_loop: name_form
+  - slot_was_set:
+    - user_name: testname
+  - active_loop: null
   - action: utter_ask_for_mood
   - intent: mood_curr
   - action: action_answer_mood

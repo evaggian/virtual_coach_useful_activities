@@ -3,15 +3,18 @@ version: "2.0"
 
 intents:
   - mood_curr
+  - start_session1
+  - confirm
+  - anything
 
 
 slots:
-  - mood:
+  mood:
     type: rasa.shared.core.slots.TextSlot
     initial_value: ''
     auto_fill: true
     influence_conversation: false
-  - user_name:
+  user_name:
     type: rasa.shared.core.slots.TextSlot
     initial_value: ''
     auto_fill: true
@@ -24,7 +27,7 @@ responses:
   ### Intro
   utter_greet_first_time:
   - text: "Hey there, I'm Lou."
-  utter_ask_name:
+  utter_ask_user_name:
   - text: "How can I call you?"
   utter_confirm_name:
   - text: "Thanks, it's nice to meet you {user_name}."
@@ -151,7 +154,13 @@ responses:
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
+  
+  
+forms:
+  name_form:
+    user_name:
+    - type: from_text
 
 
 actions:
-- action_freetext_user_name
+- action_answer_mood

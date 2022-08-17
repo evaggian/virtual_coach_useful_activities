@@ -26,9 +26,9 @@ class ActionAnswerMood(Action):
         return "action_answer_mood"
 
     async def run(self, dispatcher, tracker, domain):
-        
+
         curr_mood = tracker.get_slot('mood')
-        
+
         if curr_mood == "neutral":
             dispatcher.utter_message(template="utter_mood_neutral")
         elif curr_mood in moods_ha_lv:
@@ -39,20 +39,7 @@ class ActionAnswerMood(Action):
             dispatcher.utter_message(template="utter_mood_positive_valence_low_arousal_quadrant")
         else:
             dispatcher.utter_message(template="utter_mood_positive_valence_high_arousal_quadrant")
-        
+
         return []
-    
-
-# Set slot about user name
-class ActionGetFreetextActivityComp(Action):
-
-    def name(self):
-        return 'action_freetext_user_name'
-
-    async def run(self, dispatcher, tracker, domain):
-
-        user_name = tracker.latest_message['text']
-        
-        return [SlotSet("user_name", user_name)]
     
     
