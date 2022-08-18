@@ -30,15 +30,15 @@ class ActionAnswerMood(Action):
         curr_mood = tracker.get_slot('mood')
 
         if curr_mood == "neutral":
-            dispatcher.utter_message(template="utter_mood_neutral")
+            dispatcher.utter_message(response="utter_mood_neutral")
         elif curr_mood in moods_ha_lv:
-            dispatcher.utter_message(template="utter_mood_negative_valence_high_arousal_quadrant")
+            dispatcher.utter_message(response="utter_mood_negative_valence_high_arousal_quadrant")
         elif curr_mood in moods_la_lv:
-            dispatcher.utter_message(template="utter_mood_negative_valence_low_arousal_quadrant")
+            dispatcher.utter_message(response="utter_mood_negative_valence_low_arousal_quadrant")
         elif curr_mood in moods_la_hv:
-            dispatcher.utter_message(template="utter_mood_positive_valence_low_arousal_quadrant")
+            dispatcher.utter_message(response="utter_mood_positive_valence_low_arousal_quadrant")
         else:
-            dispatcher.utter_message(template="utter_mood_positive_valence_high_arousal_quadrant")
+            dispatcher.utter_message(response="utter_mood_positive_valence_high_arousal_quadrant")
 
         return []
     
