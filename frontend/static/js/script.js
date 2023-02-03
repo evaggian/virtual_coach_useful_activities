@@ -151,9 +151,9 @@ function send(message) {
 	//var url = "http://rasa:5005";
 	$.ajax({
 
-		//url: url + "/rasa/webhooks/rest/webhook",
+		url: url + "/rasa/webhooks/rest/webhook",
 		//url: url + "/webhooks/rest/webhook",
-		url: "http://34.159.190.156:5005/webhooks/rest/webhook",
+		//url: "http://34.159.190.156:5005/webhooks/rest/webhook", // works locally with localhost
 		type: "POST",
 		contentType: "application/json",
 		data: JSON.stringify({ message: message, sender: user_id }),
