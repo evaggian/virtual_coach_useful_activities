@@ -4,6 +4,6 @@ Virtual coach that proposes preparatory activities for quitting smoking and beco
 
 ## License
 
-Copyright (C) 2022 Delft University of Technology.
+Copyright (C) 2023 Delft University of Technology.
 
 Licensed under the Apache License, version 2.0. See LICENSE for details.

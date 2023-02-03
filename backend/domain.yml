@@ -1,0 +1,204 @@
+version: "3.1"
+
+intents:
+- mood_curr
+- start_session1
+- confirm
+
+entities:
+- mood:
+    influence_conversation: false
+
+slots:
+  mood:
+    type: text
+    initial_value: ''
+    influence_conversation: false
+    mappings:
+    - type: from_entity
+      entity: mood
+  user_name_slot:
+    type: text
+    initial_value: ''
+    influence_conversation: false
+    mappings:
+    - type: from_text
+      conditions:
+        - active_loop: user_name_form
+    
+
+responses:
+
+
+  ### Intro
+  utter_greet_first_time:
+  - text: "Hey there, I'm your virtual coach Mel."
+  utter_ask_user_name_slot:
+  - text: "How may I call you?"
+  utter_confirm_name:
+  - text: "Hi {user_name_slot}, it's nice to meet you."
+  utter_purpose_1:
+  - text: "I have mentioned by name, but let me also tell you bit about what I do: My goal is to help people prepare for quitting smoking. And since becoming more physically active may make it easier to quit smoking, I also want to prepare people for becoming more physically active."
+  utter_purpose_2:
+  - text: "Why prepare to quit? Because proper preparation can help to quit successfully."
+  utter_purpose_3:
+  - text: "And how do I prepare people? I propose activities that help build the competencies needed for quittingcond."
+  utter_purpose_4:
+  - text: "Ultimately, I want to be able to propose activities that match the situation a person is in."
+  utter_purpose_5:
+  - text: "And this is why you are here, {user_name_slot}: I want to learn how an activity I propose helps you in your specific situation."
+  utter_prompt_usage:
+  - text: "Before we start, let me explain how you can communicate with me."
+  utter_explain_usage:
+  - buttons:
+    - payload: /confirm
+      title: "Yes, that's clear"
+    - payload: /confirm
+      title: "Nice, sounds easy enough!"
+    text: "Most of the time, you can just click on one of the buttons like you already did. If no buttons appear, just make use of the text field below."
+  
+  ### Mood
+  utter_ask_for_mood:
+  - buttons:
+    - payload: /mood_curr{"mood":"satisfied"}
+      title: Satisfied
+    - payload: /mood_curr{"mood":"pleased"}
+      title: Pleased
+    - payload: /mood_curr{"mood":"delighted"}
+      title: Delighted
+    - payload: /mood_curr{"mood":"happy"}
+      title: Happy
+    - payload: /mood_curr{"mood":"glad"}
+      title: Glad
+    - payload: /mood_curr{"mood":"excited"}
+      title: Excited
+    - payload: /mood_curr{"mood":"aroused"}
+      title: Aroused
+    - payload: /mood_curr{"mood":"astonished"}
+      title: Astonished
+    - payload: /mood_curr{"mood":"alarmed"}
+      title: Alarmed
+    - payload: /mood_curr{"mood":"angry"}
+      title: Angry
+    - payload: /mood_curr{"mood":"annoyed"}
+      title: Annoyed
+    - payload: /mood_curr{"mood":"distressed"}
+      title: Distressed
+    - payload: /mood_curr{"mood":"afraid"}
+      title: Afraid
+    - payload: /mood_curr{"mood":"frustrated"}
+      title: Frustrated
+    - payload: /mood_curr{"mood":"miserable"}
+      title: Miserable
+    - payload: /mood_curr{"mood":"depressed"}
+      title: Depressed
+    - payload: /mood_curr{"mood":"gloomy"}
+      title: Gloomy
+    - payload: /mood_curr{"mood":"tense"}
+      title: Tense
+    - payload: /mood_curr{"mood":"droopy"}
+      title: Droopy
+    - payload: /mood_curr{"mood":"sad"}
+      title: Sad
+    - payload: /mood_curr{"mood":"tired"}
+      title: Tired
+    - payload: /mood_curr{"mood":"bored"}
+      title: Bored
+    - payload: /mood_curr{"mood":"sleepy"}
+      title: Sleepy
+    - payload: /mood_curr{"mood":"serene"}
+      title: Serene
+    - payload: /mood_curr{"mood":"relaxed"}
+      title: Relaxed
+    - payload: /mood_curr{"mood":"calm"}
+      title: Calm
+    - payload: /mood_curr{"mood":"tranquil"}
+      title: Tranquil
+    - payload: /mood_curr{"mood":"content"}
+      title: Content
+    - payload: /mood_curr{"mood":"neutral"}
+      title: Neutral
+    text: How are you feeling today?
+    
+  # Some alternative formulations generated with ChatGPT on 03-02-2023.
+  utter_mood_positive_valence_high_arousal_quadrant:
+  - text: "Yay, always good to hear that somebody is feeling {mood}!"
+  - text: "Awesome, you must be having a good day!"
+  - text: "Fantastic, that's very good to hear!"
+  - text: "Great, I'm happy to hear that that you're feeling {mood}!"
+  - text: "Fantastic, I'm happy to hear that!"
+  - text: "That's great news, I'm so happy that you're feeling {mood}!"
+  - text: "Good for you, I'm glad you're feeling {mood}!"
+  - text: "Excellent, it's good to hear that you're feeling {mood}!"
+  utter_mood_positive_valence_low_arousal_quadrant:
+  - text: "Nice, that's good to hear."
+  - text: "Nice, I'm glad to hear that you're feeling {mood}."
+  - text: "Nice, I'm glad to hear that."
+  - text: "Nice, that's always good to hear."
+  - text: "Nice, glad you're feeling {mood}."
+  - text: "That's good, I'm glad that you're {mood}."
+  - text: "Nice, it's good to see you're {mood}."
+  - text: "Good to hear, so things are going well for you."
+  - text: 'Good to know, you seem to be doing well.'
+  utter_mood_negative_valence_low_arousal_quadrant:
+  - text: "I hate to hear that you're feeling {mood}. I hope you feel better soon! Meanwhile, maybe this session can help to cheer you up a bit."
+  - text: "I'm sorry to hear that you're feeling {mood}. Here's hoping this chat will bring some cheer and comfort to you."
+  - text: "Aww I feel for you, let's chat and try to turn that frown upside down."
+  - text: "I hope you're feeling better soon. In the meantime, let's see if we can brighten your day a bit with this chat."
+  - text: "Oh I'm so sorry that you're not having a good day. I hope it gets better soon and that I can cheer you up a little!"
+  - text: "Oh this doesn't feel good to hear. I'm sending positive vibes your way and hoping this session will make you feel a bit better."
+  - text: "So sorry about that! Feel better soon - hopefully talking about preparing to quit smoking and becoming more physically active can help a bit."
+  utter_mood_negative_valence_high_arousal_quadrant:
+  - text: "I'm really sorry to hear that you're feeling {mood}. I hope you feel better soon!"
+  - text: "Aww I'm so sorry to hear this. Hopefully you feel less {mood} soon!"
+  - text: "Oh that's a shame that you're not having a good day. I hope it gets better soon and that I can distract you a bit."
+  - text: "I hate to hear that today isn't a good day for you. Hopefully you feel better soon and that it's okay to proceed with this session!"
+  - text: "Aww what a shame. Hopefully you feel less {mood} soon!"
+  - text: "Oh that's unfortunate, let's hope for a brighter tomorrow."
+  - text: "Aww, I hope things look up for you soon."
+  - text: "That's not good news, I hope you feel better soon and that you're up for continuing with this session."
+  - text: "I'm sorry you're having a tough day, I hope it gets better soon. I hope you feel okay to move forward with this session."
+  utter_mood_neutral:
+  - text: "Ah, sounds like you're having a pretty average day."
+  - text: "Sounds like things are going fine for you."
+  - text: "I see, seems like you're doing okay then."
+  - text: "I see, just a normal day for you then."
+  - text: "Just an average day, got it."
+  - text: "Fair enough, you're having a day that's neither here nor there."
+  - text: "Okay, a day like any other."
+  - text: "Okay, so nothing out of the ordinary."
+  - text: "I see, not too bad, not too good, just an average day."
+  - text: "Ah, a typical day, I understand."
+  - text: "Ah nothing special, just a regular day for you."
+  
+  
+  utter_goodbye:
+  - text: "Bye!"
+  
+  utter_default:
+  - text: "Sorry I do not (yet) understand wnat you mean."
+  
+  utter_error_close_session:
+  - text: "*PLEASE CLOSE THIS WINDOW. ANY FURTHER TYPING IN THIS CHAT RENDERS THIS SESSION INVALID.*"
+ 
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+
+
+# Needed so that slots can be set via buttons  
+config:
+  store_entities_as_slots: true
+  
+  
+forms:
+  user_name_form:
+    required_slots:
+        - user_name_slot
+
+
+actions:
+- action_answer_mood
+- action_save_name_mood_to_db
+- validate_user_name_form

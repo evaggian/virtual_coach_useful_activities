@@ -1,0 +1,24 @@
+version: "3.1"
+
+stories:
+
+- story: start_session_1
+  steps:
+  - intent: start_session1
+  - action: utter_greet_first_time
+  - action: user_name_form
+  - active_loop: user_name_form
+  - active_loop: null
+  - action: utter_confirm_name
+  - action: utter_ask_for_mood
+  - intent: mood_curr
+  - action: action_answer_mood
+  - action: action_save_name_mood_to_db
+  - action: utter_purpose_1
+  - action: utter_purpose_2
+  - action: utter_purpose_3
+  - action: utter_purpose_4
+  - action: utter_purpose_5
+  - action: utter_prompt_usage
+  - action: utter_explain_usage
+  - intent: confirm
