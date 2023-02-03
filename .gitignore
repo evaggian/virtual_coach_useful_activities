@@ -3,5 +3,4 @@
 .keras
 .spyproject
 actions/__pycache__
-actions/definitions.py
 backend/.rasa
