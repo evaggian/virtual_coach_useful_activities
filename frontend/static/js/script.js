@@ -151,7 +151,8 @@ function send(message) {
 	//var url = "http://rasa:5005";
 	$.ajax({
 
-		url: url + "/rasa/webhooks/rest/webhook", // tried on server
+		//url: url + "/rasa/webhooks/rest/webhook", // tried on server, also does not work on new server
+		url: url + "/rasa_server/webhooks/rest/webhook",
 		//url: url + "/webhooks/rest/webhook",  // also tried this on server
 		//url: "http://34.159.190.156:5005/webhooks/rest/webhook", // works locally with localhost
 		//url: "http://34.159.190.156/webhooks/rest/webhook", // also does not work on server
