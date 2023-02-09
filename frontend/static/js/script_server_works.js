@@ -1,30 +1,26 @@
-// ========================== start session ========================
+// ========================== greet user proactively ========================
 $(document).ready(function () {
 
 	//drop down menu for close, restart conversation & clear the chats.
 	$('.dropdown-trigger').dropdown();
 
-	//enable this if u have configured the bot to start the conversation. 
-	showBotTyping();
-	$("#userInput").prop('disabled', true);
+	//initiate the modal for displaying the charts, if you dont have charts, then you comment the below line
+	$('.modal').modal();
 
-	//get user ID
+	//enable this if u have configured the bot to start the conversation. 
+	// showBotTyping();
+	// $("#userInput").prop('disabled', true);
+
+	//global variables
+	action_name = "action_greet_user";
 	const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const userid = urlParams.get('userid');
 	user_id = userid;
+
+	//if you want the bot to start the conversation
+	//action_trigger();
 	
-	//make chat fullscreen
-	if ($('.widget').width() == 350) {
-		$('.widget').css("width" , "98%");
-		$('.widget').css("height" , "100%");
-	} else {
-		$('.widget').css("width" , "350px");
-		$('.widget').css("height" , "500px");
-		
-	}
-	
-	//start a session
 	send("/start_session1");
 
 })
