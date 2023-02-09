@@ -14,64 +14,10 @@ $(document).ready(function () {
     const userid = urlParams.get('userid');
 	user_id = userid;
 	
-	//make chat fullscreen
-	if ($('.widget').width() == 350) {
-		$('.widget').css("width" , "98%");
-		$('.widget').css("height" , "100%");
-	} else {
-		$('.widget').css("width" , "350px");
-		$('.widget').css("height" , "500px");
-		
-	}
-	
 	//start a session
 	send("/start_session1");
 
 })
-
-// ========================== restart conversation ========================
-function restartConversation() {
-	$("#userInput").prop('disabled', true);
-	//destroy the existing chart
-	$('.collapsible').remove();
-
-	if (typeof chatChart !== 'undefined') { chatChart.destroy(); }
-
-	$(".chart-container").remove();
-	if (typeof modalChart !== 'undefined') { modalChart.destroy(); }
-	$(".chats").html("");
-	$(".usrInput").val("");
-	send("/restart");
-}
-
-// ========================== let the bot start the conversation ========================
-function action_trigger() {
-
-	// send an event to the bot, so that bot can start the conversation by greeting the user
-	$.ajax({
-		//url: `http://127.0.0.1/rasa/conversations/${user_id}/execute`,
-		url: `http://localhost:5005/conversations/${user_id}/execute`, // get an error that no conversation with the user_id exists
-		//url: `http://0.0.0.0/rasa/conversations/${user_id}/execute`,
-		type: "POST",
-		contentType: "application/json",
-		data: JSON.stringify({ "name": action_name, "policy": "MappingPolicy", "confidence": "0.98" }),
-		success: function (botResponse, status) {
-			console.log("Response from Rasa: ", botResponse, "\nStatus: ", status);
-
-			if (botResponse.hasOwnProperty("messages")) {
-				setBotResponse(botResponse.messages);
-			}
-			$("#userInput").prop('disabled', false);
-		},
-		error: function (xhr, textStatus, errorThrown) {
-
-			// if there is no response from rasa server
-			setBotResponse("");
-			console.log("Error from bot end: ", textStatus);
-			$("#userInput").prop('disabled', false);
-		}
-	});
-}
 
 //=====================================	user enter or sends the message =====================
 $(".usrInput").on("keyup keypress", function (e) {
@@ -131,7 +77,7 @@ $("#sendButton").on("click", function (e) {
 
 //==================================== Set user response =====================================
 function setUserResponse(message) {
-	var UserResponse = '<img class="userAvatar" src=' + "/img/userAvatar.jpg" + '><p class="userMsg">' + message + ' </p><div class="clearfix"></div>';
+	var UserResponse = '<img class="userAvatar" src=' + "/img/user_picture.png" + '><p class="userMsg">' + message + ' </p><div class="clearfix"></div>';
 	$(UserResponse).appendTo(".chats").show("slow");
 
 	$(".usrInput").val("");
@@ -196,7 +142,7 @@ function setBotResponse(response) {
 			//if there is no response from Rasa, send  fallback message to the user
 			var fallbackMsg = "I am facing some issues, please try again later!!!";
 
-			var BotResponse = '<img class="botAvatar" src="/img/botAvatar.png"/><p class="botMsg">' + fallbackMsg + '</p><div class="clearfix"></div>';
+			var BotResponse = '<img class="botAvatar" src="/img/chatbot_picture.png"/><p class="botMsg">' + fallbackMsg + '</p><div class="clearfix"></div>';
 
 			$(BotResponse).appendTo(".chats").hide().fadeIn(1000);
 			scrollToBottomOfResults();
@@ -208,7 +154,7 @@ function setBotResponse(response) {
 
 				//check if the response contains "text"
 				if (response[i].hasOwnProperty("text")) {
-					var BotResponse = '<img class="botAvatar" src="/img/botAvatar.png"/><p class="botMsg">' + response[i].text + '</p><div class="clearfix"></div>';
+					var BotResponse = '<img class="botAvatar" src="/img/chatbot_picture.png"/><p class="botMsg">' + response[i].text + '</p><div class="clearfix"></div>';
 					$(BotResponse).appendTo(".chats").hide().fadeIn(1000);
 				}
 
@@ -238,42 +184,6 @@ function setBotResponse(response) {
 					if (response[i].custom.payload == "dropDown") {
 						dropDownData = response[i].custom.data;
 						renderDropDwon(dropDownData);
-						return;
-					}
-
-					//check if the custom payload type is "location"
-					if (response[i].custom.payload == "location") {
-						$("#userInput").prop('disabled', true);
-						getLocation();
-						scrollToBottomOfResults();
-						return;
-					}
-
-					//check if the custom payload type is "cardsCarousel"
-					if (response[i].custom.payload == "cardsCarousel") {
-						restaurantsData = (response[i].custom.data)
-						showCardsCarousel(restaurantsData);
-						return;
-					}
-
-					//check if the custom payload type is "chart"
-					if (response[i].custom.payload == "chart") {
-
-						// sample format of the charts data:
-						// var chartData = { "title": "Leaves", "labels": ["Sick Leave", "Casual Leave", "Earned Leave", "Flexi Leave"], "backgroundColor": ["#36a2eb", "#ffcd56", "#ff6384", "#009688", "#c45850"], "chartsData": [5, 10, 22, 3], "chartType": "pie", "displayLegend": "true" }
-
-						//store the below parameters as global variable, 
-						// so that it can be used while displaying the charts in modal.
-						chartData = (response[i].custom.data)
-						title = chartData.title;
-						labels = chartData.labels;
-						backgroundColor = chartData.backgroundColor;
-						chartsData = chartData.chartsData;
-						chartType = chartData.chartType;
-						displayLegend = chartData.displayLegend;
-
-						// pass the above variable to createChart function
-						createChart(title, labels, backgroundColor, chartsData, chartType, displayLegend)
 						return;
 					}
 
@@ -355,26 +265,6 @@ $(document).on("click", ".menu .menuChips", function () {
 
 //====================================== functions for drop-down menu of the bot  =========================================
 
-//restart function to restart the conversation.
-$("#restart").click(function () {
-	restartConversation()
-});
-
-//clear function to clear the chat contents of the widget.
-$("#clear").click(function () {
-	$(".chats").fadeOut("normal", function () {
-		$(".chats").html("");
-		$(".chats").fadeIn();
-	});
-});
-
-//close function to close the widget.
-$("#close").click(function () {
-	$(".profile_div").toggle();
-	$(".widget").toggle();
-	scrollToBottomOfResults();
-});
-
 //fullscreen function to toggle fullscreen.
 $("#fullscreen").click(function () {
 	if ($('.widget').width() == 350) {
@@ -386,65 +276,6 @@ $("#fullscreen").click(function () {
 		
 	}
 });
-
-//====================================== Cards Carousel =========================================
-
-function showCardsCarousel(cardsToAdd) {
-	var cards = createCardsCarousel(cardsToAdd);
-
-	$(cards).appendTo(".chats").show();
-
-
-	if (cardsToAdd.length <= 2) {
-		$(".cards_scroller>div.carousel_cards:nth-of-type(" + i + ")").fadeIn(3000);
-	}
-	else {
-		for (var i = 0; i < cardsToAdd.length; i++) {
-			$(".cards_scroller>div.carousel_cards:nth-of-type(" + i + ")").fadeIn(3000);
-		}
-		$(".cards .arrow.prev").fadeIn("3000");
-		$(".cards .arrow.next").fadeIn("3000");
-	}
-
-
-	scrollToBottomOfResults();
-
-	const card = document.querySelector("#paginated_cards");
-	const card_scroller = card.querySelector(".cards_scroller");
-	var card_item_size = 225;
-
-	card.querySelector(".arrow.next").addEventListener("click", scrollToNextPage);
-	card.querySelector(".arrow.prev").addEventListener("click", scrollToPrevPage);
-
-
-	// For paginated scrolling, simply scroll the card one item in the given
-	// direction and let css scroll snaping handle the specific alignment.
-	function scrollToNextPage() {
-		card_scroller.scrollBy(card_item_size, 0);
-	}
-	function scrollToPrevPage() {
-		card_scroller.scrollBy(-card_item_size, 0);
-	}
-
-}
-
-function createCardsCarousel(cardsData) {
-
-	var cards = "";
-
-	for (i = 0; i < cardsData.length; i++) {
-		title = cardsData[i].name;
-		ratings = Math.round((cardsData[i].ratings / 5) * 100) + "%";
-		data = cardsData[i];
-		item = '<div class="carousel_cards in-left">' + '<img class="cardBackgroundImage" src="' + cardsData[i].image + '"><div class="cardFooter">' + '<span class="cardTitle" title="' + title + '">' + title + "</span> " + '<div class="cardDescription">' + '<div class="stars-outer">' + '<div class="stars-inner" style="width:' + ratings + '" ></div>' + "</div>" + "</div>" + "</div>" + "</div>";
-
-		cards += item;
-	}
-
-	var cardContents = '<div id="paginated_cards" class="cards"> <div class="cards_scroller">' + cards + '  <span class="arrow prev fa fa-chevron-circle-left "></span> <span class="arrow next fa fa-chevron-circle-right" ></span> </div> </div>';
-
-	return cardContents;
-}
 
 //====================================== Quick Replies ==================================================
 
@@ -500,56 +331,10 @@ $(document).on("click", ".quickReplies .chip", function () {
 
 });
 
-//====================================== Get User Location ==================================================
-function getLocation() {
-	if (navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition(getUserPosition, handleLocationAccessError);
-	} else {
-		response = "Geolocation is not supported by this browser.";
-	}
-}
-
-function getUserPosition(position) {
-	response = "Latitude: " + position.coords.latitude + " Longitude: " + position.coords.longitude;
-	console.log("location: ", response);
-
-	//here you add the intent which you want to trigger 
-	response = '/inform{"latitude":' + position.coords.latitude + ',"longitude":' + position.coords.longitude + '}';
-	$("#userInput").prop('disabled', false);
-	send(response);
-	showBotTyping();
-}
-
-function handleLocationAccessError(error) {
-
-	switch (error.code) {
-		case error.PERMISSION_DENIED:
-			console.log("User denied the request for Geolocation.")
-			break;
-		case error.POSITION_UNAVAILABLE:
-			console.log("Location information is unavailable.")
-			break;
-		case error.TIMEOUT:
-			console.log("The request to get user location timed out.")
-			break;
-		case error.UNKNOWN_ERROR:
-			console.log("An unknown error occurred.")
-			break;
-	}
-
-	response = '/inform{"user_location":"deny"}';
-	send(response);
-	showBotTyping();
-	$(".usrInput").val("");
-	$("#userInput").prop('disabled', false);
-
-
-}
-
 //======================================bot typing animation ======================================
 function showBotTyping() {
 
-	var botTyping = '<img class="botAvatar" id="botAvatar" src="/img/botAvatar.png"/><div class="botTyping">' + '<div class="bounce1"></div>' + '<div class="bounce2"></div>' + '<div class="bounce3"></div>' + '</div>'
+	var botTyping = '<img class="botAvatar" id="botAvatar" src="/img/chatbot_picture.png"/><div class="botTyping">' + '<div class="bounce1"></div>' + '<div class="bounce2"></div>' + '<div class="bounce3"></div>' + '</div>'
 	$(botTyping).appendTo(".chats");
 	$('.botTyping').show();
 	scrollToBottomOfResults();
@@ -581,114 +366,4 @@ function createCollapsible(data) {
 	// initialize the collapsible
 	$('.collapsible').collapsible();
 	scrollToBottomOfResults();
-}
-
-
-//====================================== creating Charts ======================================
-
-//function to create the charts & render it to the canvas
-function createChart(title, labels, backgroundColor, chartsData, chartType, displayLegend) {
-
-	//create the ".chart-container" div that will render the charts in canvas as required by charts.js,
-	// for more info. refer: https://www.chartjs.org/docs/latest/getting-started/usage.html
-	var html = '<div class="chart-container"> <span class="modal-trigger" id="expand" title="expand" href="#modal1"><i class="fa fa-external-link" aria-hidden="true"></i></span> <canvas id="chat-chart" ></canvas> </div> <div class="clearfix"></div>'
-	$(html).appendTo('.chats');
-
-	//create the context that will draw the charts over the canvas in the ".chart-container" div
-	var ctx = $('#chat-chart');
-
-	// Once you have the element or context, instantiate the chart-type by passing the configuration,
-	//for more info. refer: https://www.chartjs.org/docs/latest/configuration/
-	var data = {
-		labels: labels,
-		datasets: [{
-			label: title,
-			backgroundColor: backgroundColor,
-			data: chartsData,
-			fill: false
-		}]
-	};
-	var options = {
-		title: {
-			display: true,
-			text: title
-		},
-		layout: {
-			padding: {
-				left: 5,
-				right: 0,
-				top: 0,
-				bottom: 0
-			}
-		},
-		legend: {
-			display: displayLegend,
-			position: "right",
-			labels: {
-				boxWidth: 5,
-				fontSize: 10
-			}
-		}
-	}
-
-	//draw the chart by passing the configuration
-	chatChart = new Chart(ctx, {
-		type: chartType,
-		data: data,
-		options: options
-	});
-
-	scrollToBottomOfResults();
-}
-
-// on click of expand button, get the chart data from gloabl variable & render it to modal
-$(document).on("click", "#expand", function () {
-
-	//the parameters are declared gloabally while we get the charts data from rasa.
-	createChartinModal(title, labels, backgroundColor, chartsData, chartType, displayLegend)
-});
-
-//function to render the charts in the modal
-function createChartinModal(title, labels, backgroundColor, chartsData, chartType, displayLegend) {
-	//if you want to display the charts in modal, make sure you have configured the modal in index.html
-	//create the context that will draw the charts over the canvas in the "#modal-chart" div of the modal
-	var ctx = $('#modal-chart');
-
-	// Once you have the element or context, instantiate the chart-type by passing the configuration,
-	//for more info. refer: https://www.chartjs.org/docs/latest/configuration/
-	var data = {
-		labels: labels,
-		datasets: [{
-			label: title,
-			backgroundColor: backgroundColor,
-			data: chartsData,
-			fill: false
-		}]
-	};
-	var options = {
-		title: {
-			display: true,
-			text: title
-		},
-		layout: {
-			padding: {
-				left: 5,
-				right: 0,
-				top: 0,
-				bottom: 0
-			}
-		},
-		legend: {
-			display: displayLegend,
-			position: "right"
-		},
-
-	}
-
-	modalChart = new Chart(ctx, {
-		type: chartType,
-		data: data,
-		options: options
-	});
-
 }
