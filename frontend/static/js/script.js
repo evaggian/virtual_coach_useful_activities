@@ -5,8 +5,8 @@ $(document).ready(function () {
 	$('.dropdown-trigger').dropdown();
 
 	//enable this if u have configured the bot to start the conversation. 
-	showBotTyping();
-	$("#userInput").prop('disabled', true);
+	//showBotTyping();
+	//$("#userInput").prop('disabled', true);
 
 	//get user ID
 	const queryString = window.location.search;
