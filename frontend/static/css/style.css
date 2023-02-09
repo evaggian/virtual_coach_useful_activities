@@ -19,7 +19,7 @@ body {
 
 .chat_header {
 	height: 60px;
-	background: rgb(68, 61, 177);
+	background: rgb(69,222,225);
 	border-radius: 10px 10px 0px 0px;
 	padding: 5px;
 	font-size: 20px;
@@ -104,7 +104,7 @@ textarea-webkit-scrollbar {
 	padding: 10px;
 	float: right;
 	margin-right: 0.5em;
-	background: #443db1;
+	background: #45dee1;
 	color: white;
 	margin-bottom: 0.15em;
 	font-size: 13px;
@@ -156,7 +156,7 @@ textarea-webkit-scrollbar {
 	padding: 5px;
 	font-size: 20px;
 	cursor: pointer;
-	color: #2b2bab;
+	color: #45dee1;
 }
 
 .imgProfile {
