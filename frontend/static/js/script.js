@@ -145,7 +145,7 @@ function scrollToBottomOfResults() {
 
 //============== send the user message to rasa server =============================================
 function send(message) {
-	var url = document.location.protocol + "//" + document.location.hostname;
+	//var url = document.location.protocol + "//" + document.location.hostname;
 	//var url = document.location.protocol + "//" + document.location.hostname + ":5005";
 	//var url = "http://localhost:5005";
 	//var url = "http://rasa:5005";
@@ -154,7 +154,7 @@ function send(message) {
 		url: url + "/rasa/webhooks/rest/webhook", // tried on server, also does not work on new server
 		//url: url + "/rasa_server/webhooks/rest/webhook", // tried on new server, also does not work on new server after opening port 5005.
 		//url: url + "/webhooks/rest/webhook",  // also tried this on server
-		//url: "http://34.159.190.156:5005/webhooks/rest/webhook", // works locally with localhost
+		url: "http://34.159.190.156:5005/webhooks/rest/webhook", // works locally with localhost
 		//url: "http://34.159.190.156/webhooks/rest/webhook", // also does not work on server
 		//url: "http://rasa:5005/webhooks/rest/webhook", // also does not work on server
 		//url: "http://rasa_server:5005/webhooks/rest/webhook", // also does not work on server, also does not work on on new server
