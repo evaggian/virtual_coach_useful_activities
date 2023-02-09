@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Chatbot</title>
+    <title>Virtual Coach Mel</title>
     <!--Let browser know website is optimized for mobile-->
     
 
@@ -33,13 +33,21 @@
             <div class="chat_header">
 
                 <!--Add the name of the bot here -->
-                <span class="chat_header_title">Mel</span>
+                <span class="chat_header_title">Virtual Coach Mel</span>
                 <span class="dropdown-trigger" href='#' data-target='dropdown1'>
                     <i class="material-icons">
                         more_vert
                     </i>
                 </span>
             </div>
+			
+			<!-- Dropdown menu-->
+                <ul id='dropdown1' class='dropdown-content'>
+                    <li><a href="#" id="clear">Clear</a></li>
+                    <li><a href="#" id="restart">Restart</a></li>
+                    <li><a href="#" id="close">Close</a></li>
+                    <li><a href="#" id="fullscreen">Fullscreen</a></li>
+                </ul>
 
             <!--Chatbot contents goes here -->
             <div class="chats" id="chats">
@@ -65,9 +73,6 @@
 
     <!--Main Script -->
     <script type="text/javascript" src="/js/script.js"></script>
-
-    <!--Chart.js Script -->
-    <script type="text/javascript" src="/js/chart.min.js"></script>
 
 </body>
 </html>
