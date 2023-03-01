@@ -35,10 +35,10 @@ body {
 .chats {
 	/* display: none; */
 	/* Set height of chat area within window in fullscreen mode*/
-	height: 81%;
+	height: 82%;
 	padding: 2px;
 	/* Set width of chat area within window in fullscreen mode*/
-	width: 97%;
+	width: 98%;
 	border-radius: 1px;
 	overflow-y: scroll;
 	margin-top: 1px;
@@ -371,7 +371,7 @@ div.content_data::-webkit-scrollbar {
 
 
 /* css for single card */
-
+/* This contains the buttons */
 .singleCard {
 	padding-left: 10%;
 	padding-right: 10px;
