@@ -35,9 +35,9 @@ body {
 .chats {
 	/* display: none; */
 	/* height: 385px; */
-	height: 85%;
+	height: 80%;
 	padding: 2px;
-	width: 85%;
+	width: 95%;
 	border-radius: 1px;
 	overflow-y: scroll;
 	margin-top: 1px;
