@@ -51,6 +51,18 @@ To run this project on a Google Compute Engine, I followed these steps:
    - Clone your project from Github.
    - Navigate to your project folder and start your project with `docker-compose up`.
    - You can access the frontend from your browser via `http://<your_instance_IP>:3000/?userid=<some_user_id>`.
+   - Open the chat here:
+   
+   <img src = "Readme_images/open_chat.PNG" width = "250" title="Open chat.">
+   
+   - The chat should look something like this:
+   
+   <img src = "Readme_images/chat.PNG" width = "250" title="Chat.">
+   
+   - And you can also make the chat fullscreen:
+   
+   <img src = "Readme_images/chat_fullscreen.PNG" width = "250" title="Fullscreen chat.">
+   
 
 
 Some errors I got during the setup:
