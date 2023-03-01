@@ -60,7 +60,7 @@ Some errors I got during the setup:
 	     
 		 <img src = "Readme_images/error_build.PNG" width = "500" title="docker-compose up --build error.">
 		 
-		 - Run `sudo docker-compose up –build`. 
+		 - Run `sudo docker-compose up –-build`. 
 
 
 ## License
