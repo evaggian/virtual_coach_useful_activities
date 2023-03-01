@@ -16,14 +16,14 @@ To run this project on a Google Compute Engine, I followed these steps:
 	   - Choose a small instance for the start, since you have to pay more for larger instances. I started with an e2-medium machine type and 100GB for the boot disk.
 	   - The first 3 months you have some free credit.
 	2. Follow the instructions from [here](https://github.com/AmirStudy/Rasa_Deployment) in the sense that you “allow full access to all cloud APIs” on the Google Compute Engine instance. This is shown in this video: https://www.youtube.com/watch?v=qOHszxJsuGs&ab_channel=JiteshGaikwad. Also see this screenshot:
-	<img src = "Readme_Images/allow_full_access.PNG" width = "500" title="Allowing full access to all cloud APIs.">
+	<img src = "Readme_images/allow_full_access.PNG" width = "500" title="Allowing full access to all cloud APIs.">
 	3. Open port 5005 for tcp on the Compute Engine instance:
-	<img src = "Readme_Images/firewall_rule.PNG" width = "500" title="Creating a firewall rule.">
-	<img src = "Readme_Images/firewall_rule_0.PNG" width = "500" title="Creating a firewall rule 0.">
-	<img src = "Readme_Images/firewall_rule_1.PNG" width = "500" title="Creating a firewall rule 1.">
-	<img src = "Readme_Images/firewall_rule_2.PNG" width = "500" title="Creating a firewall rule 2.">
+	<img src = "Readme_images/firewall_rule.PNG" width = "500" title="Creating a firewall rule.">
+	<img src = "Readme_images/firewall_rule_0.PNG" width = "500" title="Creating a firewall rule 0.">
+	<img src = "Readme_images/firewall_rule_1.PNG" width = "500" title="Creating a firewall rule 1.">
+	<img src = "Readme_images/firewall_rule_2.PNG" width = "500" title="Creating a firewall rule 2.">
 	4. Follow the instructions from [here](https://github.com/AmirStudy/Rasa_Deployment) for installing Docker on the Google Compute Engine instance. You can do this via the command line that opens after you click on "SSH":
-	<img src = "Readme_Images/ssh.PNG" width = "500" title="Connect via SSH.">
+	<img src = "Readme_images/ssh.PNG" width = "500" title="Connect via SSH.">
 	5. Install docker-compose on the instance:
 	   - I folowed the steps described [here](https://levelup.gitconnected.com/the-easiest-docker-docker-compose-setup-on-compute-engine-ec171c09a29a)
 	   - `curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose`
@@ -42,7 +42,7 @@ Some errors I got during the setup:
    - "Couldn't connect to Docker daemon at http+docker://localhost - is it running? If it's at a non-standard location, specify the URL with the DOCKER_HOST environment variable“ when running `docker-compose up –-build`.
       - I followed the steps suggested here: https://forums.docker.com/t/couldnt-connect-to-docker-daemon-at-http-docker-localhost-is-it-running/87257/2.
 	  - These 2 steps fixed the issue for me:
-	     <img src = "Readme_Images/error_build.PNG" width = "500" title="docker-compose up --build error.">
+	     <img src = "Readme_images/error_build.PNG" width = "500" title="docker-compose up --build error.">
 		 - Run `sudo docker-compose up –build`. 
 
 
