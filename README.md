@@ -16,24 +16,26 @@ To run this project on a Google Compute Engine, I followed these steps:
 	  - Choose a small instance for the start, since you have to pay more for larger instances. I started with an e2-medium machine type and 100GB for the boot disk.
 	  - The first 3 months you have some free credit.
    - Follow the instructions from [here](https://github.com/AmirStudy/Rasa_Deployment) in the sense that you “allow full access to all cloud APIs” on the Google Compute Engine instance. This is shown in this video: https://www.youtube.com/watch?v=qOHszxJsuGs&ab_channel=JiteshGaikwad. Also see this screenshot:
-	<img src = "Readme_images/allow_full_access.PNG" width = "500" title="Allowing full access to all cloud APIs.">
+   
+   <img src = "Readme_images/allow_full_access.PNG" width = "500" title="Allowing full access to all cloud APIs.">
+   
    - Open port 5005 for tcp on the Compute Engine instance:
 	
-	<img src = "Readme_images/firewall_rule.PNG" width = "500" title="Creating a firewall rule.">
+   <img src = "Readme_images/firewall_rule.PNG" width = "500" title="Creating a firewall rule.">
 	
-	<img src = "Readme_images/firewall_rule_0.PNG" width = "500" title="Creating a firewall rule 0.">
+   <img src = "Readme_images/firewall_rule_0.PNG" width = "500" title="Creating a firewall rule 0.">
 	
-	<img src = "Readme_images/firewall_rule_1.PNG" width = "500" title="Creating a firewall rule 1.">
+   <img src = "Readme_images/firewall_rule_1.PNG" width = "500" title="Creating a firewall rule 1.">
 	
-	<img src = "Readme_images/firewall_rule_2.PNG" width = "500" title="Creating a firewall rule 2.">
+   <img src = "Readme_images/firewall_rule_2.PNG" width = "500" title="Creating a firewall rule 2.">
 	
    - Follow the instructions from [here](https://github.com/AmirStudy/Rasa_Deployment) for installing Docker on the Google Compute Engine instance. You can do this via the command line that opens after you click on "SSH":
 	<img src = "Readme_images/ssh.PNG" width = "500" title="Connect via SSH.">
    - Install docker-compose on the instance:
-	  - I folowed the steps described [here](https://levelup.gitconnected.com/the-easiest-docker-docker-compose-setup-on-compute-engine-ec171c09a29a)
-	  - `curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose`
-	  - `chmod +x /usr/local/bin/docker-compose`
-	  - You might need to add “sudo” in front of the commands to make them work.
+	  - I folowed the steps described [here](https://levelup.gitconnected.com/the-easiest-docker-docker-compose-setup-on-compute-engine-ec171c09a29a):
+	     - `curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose`
+	     - `chmod +x /usr/local/bin/docker-compose`
+	     - You might need to add “sudo” in front of the commands to make them work.
    - I suggest getting a static IP address for your Google Compute Engine instance:
       - Follow the instructions here: https://cloud.google.com/compute/docs/ip-addresses/reserve-static-external-ip-address.
 	  - You have to pay for every month, but it is rather cheap.
