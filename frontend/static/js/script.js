@@ -271,7 +271,8 @@ $("#fullscreen").click(function () {
 		$('.widget').css("width" , "98%");
 		$('.widget').css("height" , "100%");
 	} else {
-		$('.widget').css("width" , "350px");
+		//$('.widget').css("width" , "350px");
+		$('.widget').css("width" , "800px");
 		//$('.widget').css("height" , "500px");
 		$('.widget').css("height" , "100%");
 	}
