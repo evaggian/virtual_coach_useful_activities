@@ -268,14 +268,11 @@ $(document).on("click", ".menu .menuChips", function () {
 //fullscreen function to toggle fullscreen.
 $("#fullscreen").click(function () {
 	if ($('.widget').width() == 350) {
-		// This determines the width and height of the window
+		// This determines the width and height of the window when opened in browser on a laptop
 		$('.widget').css("width" , "98%");
 		$('.widget').css("height" , "100%");
 	} else {
-		//$('.widget').css("width" , "350px");
-		$('.widget').css("width" , "98%");
-		//$('.widget').css("width" , "200px");
-		//$('.widget').css("height" , "500px");
+		$('.widget').css("width" , "350px");
 		$('.widget').css("height" , "100%");
 	}
 });
