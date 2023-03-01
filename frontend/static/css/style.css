@@ -34,10 +34,11 @@ body {
 
 .chats {
 	/* display: none; */
-	/* height: 385px; */
-	height: 80%;
+	/* Set height of chat area within window in fullscreen mode*/
+	height: 81%;
 	padding: 2px;
-	width: 95%;
+	/* Set width of chat area within window in fullscreen mode*/
+	width: 97%;
 	border-radius: 1px;
 	overflow-y: scroll;
 	margin-top: 1px;
