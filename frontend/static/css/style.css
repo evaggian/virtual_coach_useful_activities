@@ -30,13 +30,13 @@ body {
 	color: #f7f7f7;
 	float: left;
 	margin-top: 3%;
-	margin-left: 20%;
+	margin-left: 22%;
 }
 
 .chats {
 	/* display: none; */
 	/* Set height of chat area within window in fullscreen mode*/
-	height: 82%;
+	height: 83%;
 	padding: 2px;
 	/* Set width of chat area within window in fullscreen mode*/
 	width: 98%;
