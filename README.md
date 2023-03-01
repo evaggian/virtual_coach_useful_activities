@@ -23,14 +23,14 @@ To run this project on a Google Compute Engine, I followed these steps:
 	
    <img src = "Readme_images/firewall_rule.PNG" width = "500" title="Creating a firewall rule.">
 	
-   <img src = "Readme_images/firewall_rule_0.PNG" width = "500" title="Creating a firewall rule 0.">
+   <img src = "Readme_images/firewall_rule_0.PNG" width = "500" title="Creating a firewall rule 0." width=50% height=50%>
 	
    <img src = "Readme_images/firewall_rule_1.PNG" width = "500" title="Creating a firewall rule 1.">
 	
-   <img src = "Readme_images/firewall_rule_2.PNG" width = "500" title="Creating a firewall rule 2.">
+   <img src = "Readme_images/firewall_rule_2.PNG" width = "500" title="Creating a firewall rule 2." width=50% height=50%>
 	
    - Follow the instructions from [here](https://github.com/AmirStudy/Rasa_Deployment) for installing Docker on the Google Compute Engine instance. You can do this via the command line that opens after you click on "SSH":
-	<img src = "Readme_images/ssh.PNG" width = "500" title="Connect via SSH.">
+	<img src = "Readme_images/ssh.PNG" width = "500" title="Connect via SSH." width=50% height=50%>
    - Install docker-compose on the instance:
 	  - I folowed the steps described [here](https://levelup.gitconnected.com/the-easiest-docker-docker-compose-setup-on-compute-engine-ec171c09a29a):
 	     - `curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose`
