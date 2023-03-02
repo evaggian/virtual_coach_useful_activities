@@ -7,11 +7,8 @@ intents:
 - start_session2
 
 entities:
-### intro/general
 - mood:
     influence_conversation: false
-    
-### states
 - state_1:
     influence_conversation: false
 
@@ -34,14 +31,14 @@ slots:
       conditions:
         - active_loop: user_name_form
         
-   ### states
-   state_1:
-     type: text
-     initial_value: ''
-     influence_conversation: false
-     mappings:
-     - type: from_entity
-       entity: state_1
+  ### states
+  state_1:
+    type: text
+    initial_value: ''
+    influence_conversation: false
+    mappings:
+    - type: from_entity
+      entity: state_1
     
 
 responses:
@@ -64,8 +61,8 @@ responses:
   utter_purpose_5:
   - buttons:
     - payload: /confirm
-    title: "I'm ready"
-  text: "And this is why you are here, {user_name_slot}: I want to learn how an activity I propose helps you in your specific situation.\nLet me know when you have read what my purpose is and are ready to continue."
+      title: "I'm ready"
+    text: "And this is why you are here, {user_name_slot}: I want to learn how an activity I propose helps you in your specific situation.\nLet me know when you have read what my purpose is and are ready to continue."
   utter_prompt_usage:
   - text: "Okay! Before we start, let me explain how you can communicate with me."
   utter_explain_usage:
