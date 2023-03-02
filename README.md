@@ -44,7 +44,7 @@ To run this project on a Google Compute Engine, I followed these steps:
 	  - I folowed the steps described [here](https://levelup.gitconnected.com/the-easiest-docker-docker-compose-setup-on-compute-engine-ec171c09a29a):
 	     - `curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose`
 	     - `chmod +x /usr/local/bin/docker-compose`
-	     - You might need to add “sudo” in front of the commands to make them work.
+	     - You might need to add `sudo` in front of the commands to make them work.
    - I suggest getting a static IP address for your Google Compute Engine instance:
       - Follow the instructions here: https://cloud.google.com/compute/docs/ip-addresses/reserve-static-external-ip-address.
 	  - You have to pay for every month, but it is rather cheap.
@@ -68,20 +68,25 @@ To run this project on a Google Compute Engine, I followed these steps:
    
 This project uses an SQLTrackerStore (https://rasa.com/docs/rasa/tracker-stores/) to store the conversation history in a database:
    - A nice way to see the contents of this database is using the program DBeaver.
-   - First also open port 5432 on your Google Compute Engine instance for tcp. There is no need to restart the instance after opening the port.
-   - To configure DBeaver, add a new database connection:
+      - First also open port 5432 on your Google Compute Engine instance for tcp. There is no need to restart the instance after opening the port.
+      - To configure DBeaver, add a new database connection:
    
-   <img src = "Readme_images/dbeaver_1.PNG" width = "250" title="DBeaver 1.">
+      <img src = "Readme_images/dbeaver_1.PNG" width = "250" title="DBeaver 1.">
    
-   - Select a "PostgresSQL" connection.
-   - Enter your instance IP address as the "Host", keep the "Port" set to 5432, enter the username and password used in docker-compose.yml, and set the "Database" to "rasa".
-   - After connecting, you can inspect the database content by clicking on the "events" table:
+      - Select a "PostgresSQL" connection.
+      - Enter your instance IP address as the "Host", keep the "Port" set to 5432, enter the username and password used in docker-compose.yml, and set the "Database" to "rasa".
+      - After connecting, you can inspect the database content by clicking on the "events" table:
    
-   <img src = "Readme_images/dbeaver_2.PNG" width = "250" title="DBeaver 2.">
+      <img src = "Readme_images/dbeaver_2.PNG" width = "500" title="DBeaver 2.">
    
-   - After clicking on "Data," you can see the table content. The "sender_id" is the "<some_user_id>" you used when accessing your frontend:
+      - After clicking on "Data," you can see the table content. The "sender_id" is the "<some_user_id>" you used when accessing your frontend:
    
-   <img src = "Readme_images/dbeaver_3.PNG" width = "250" title="DBeaver 3.">
+      <img src = "Readme_images/dbeaver_3.PNG" width = "500" title="DBeaver 3.">
+   
+      - To refresh the view, you can click on File > Refresh in DBeaver.
+
+   - The database is persistent because of the "volumes" we specified in docker-compose.yml for postgres. Read more about this here: https://medium.com/codex/how-to-persist-and-backup-data-of-a-postgresql-docker-container-9fe269ff4334.
+      - So you can run `docker-compose down --volumes` and `docker-compose up --build` and the database content is still there. Check for yourself using DBeaver.
 
 
 Some errors I got during the setup:
@@ -92,6 +97,15 @@ Some errors I got during the setup:
 		 <img src = "Readme_images/error_build.PNG" width = "500" title="docker-compose up --build error.">
 		 
 		 - Run `sudo docker-compose up –-build`. 
+		 
+		 
+## Frontend Styling
+
+Check the file frontend/static/css/style.css to adapt the styling of the frontend:
+   - .chats defines the chat area within the window in fullscreen mode. I tuned the height and width of this.
+   - .chat_header_title defines the chat header title. I set the color to #f7f7f7 so that the title is not visible in fullscreen mode. Change the margin-left to align the title to the center.
+
+The files in frontend/static/img are used to display the chatbot and the user inside the chat, as well as to display the chatbot when the chat is still closed at the start.
 
 
 ## License
