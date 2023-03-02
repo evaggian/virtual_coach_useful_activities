@@ -84,6 +84,9 @@ This project uses an SQLTrackerStore (https://rasa.com/docs/rasa/tracker-stores/
       <img src = "Readme_images/dbeaver_3.PNG" width = "500" title="DBeaver 3.">
    
       - To refresh the view, you can click on File > Refresh in DBeaver.
+	  - You can also export the data in the database:
+	  
+	  <img src = "Readme_images/dbeaver_4.PNG" width = "500" title="DBeaver 4.">
 
    - The database is persistent because of the "volumes" we specified in docker-compose.yml for postgres. Read more about this here: https://medium.com/codex/how-to-persist-and-backup-data-of-a-postgresql-docker-container-9fe269ff4334.
       - So you can run `docker-compose down --volumes` and `docker-compose up --build` and the database content is still there. Check for yourself using DBeaver.
