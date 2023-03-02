@@ -51,7 +51,7 @@ To run this project on a Google Compute Engine, I followed these steps:
    - Make sure you turn off your instance whenever you do not need it, as you are charged for the time that it is up.
    - Set the IP address of your Google Compute Engine instance in the function `send(message)` in the file frontend/static/js/script.js: `url: "http://<your_instance_IP>:5005/webhooks/rest/webhook"`. This is why it helps to have a static IP address.
    - Clone your project from Github on the Google Compute Engine instance.
-   - Navigate to your project folder and start your project with `docker-compose up`.
+   - Navigate to your project folder on the Compute Engine instance and start your project with `docker-compose up`.
    - You can access the frontend from your browser via `http://<your_instance_IP>:3000/?userid=<some_user_id>`.
    - Open the chat here:
    
