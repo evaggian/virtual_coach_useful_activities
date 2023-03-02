@@ -2,57 +2,5 @@ version: "3.1"
 
 stories:
 
-- story: start_session_1
-  steps:
-  - intent: start_session1
-  - action: utter_greet_first_time
-  - action: user_name_form
-  - active_loop: user_name_form
-  - active_loop: null
-  - action: utter_confirm_name
-  - action: utter_ask_for_mood
-  - intent: mood_curr
-  - action: action_answer_mood
-  - action: action_save_name_mood_to_db
-  - action: utter_purpose_1
-  - action: utter_purpose_2
-  - action: utter_purpose_3
-  - action: utter_purpose_4
-  - action: utter_purpose_5
-  - intent: confirm
-  - action: utter_prompt_usage
-  - action: utter_explain_usage
-  - intent: confirm
-  - action: utter_intro_session1_1
-  - action: utter_intro_session1_2
-  - action: utter_intro_session1_3
-  - action: utter_intro_session1_4
-  - action: utter_intro_session1_5
-  - action: utter_intro_session1_6
-  - action: utter_intro_session1_7
-  - intent: confirm
-  - checkpoint: state_questions
-  
-  
-- story: state_questions
-  steps:
-  - checkpoint: state_questions
-  - action: utter_state_question_intro
-  - action: utter_state_question_1
-  - intent: confirm
-  
 
-- story: start_session_2
-  steps:
-  - intent: start_session2
-  - action: utter_greet_repeat
-  - action: utter_ask_for_mood
-  - intent: mood_curr
-  - action: action_answer_mood
-  - action: utter_intro_session2_1
-  - action: utter_intro_session2_2
-  - action: utter_intro_session2_3
-  - action: utter_intro_session2_4
-  - action: utter_intro_session2_5
-  - intent: confirm
   
