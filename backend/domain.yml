@@ -12,6 +12,8 @@ intents:
 entities:
 - mood:
     influence_conversation: false
+- mood_quadrant:
+    influence_conversation: false
 - state_1:
     influence_conversation: false
 
@@ -25,6 +27,13 @@ slots:
     mappings:
     - type: from_entity
       entity: mood
+  mood_quadrant:
+    type: text
+    initial_value: ''
+    influence_conversation: false
+    mappings:
+    - type: from entity
+      entity: mood_quadrant
   user_name_slot:
     type: text
     initial_value: ''
@@ -154,67 +163,83 @@ responses:
   ### Mood
   utter_ask_for_mood:
   - buttons:
-    - payload: /mood_curr{"mood":"satisfied"}
+    - payload: /mood_curr{"mood":"satisfied", "mood_quadrant":"ha_hv"}
       title: Satisfied
-    - payload: /mood_curr{"mood":"pleased"}
+    - payload: /mood_curr{"mood":"pleased", "mood_quadrant":"ha_hv"}
       title: Pleased
-    - payload: /mood_curr{"mood":"delighted"}
+    - payload: /mood_curr{"mood":"delighted", "mood_quadrant":"ha_hv"}
       title: Delighted
-    - payload: /mood_curr{"mood":"happy"}
+    - payload: /mood_curr{"mood":"happy", "mood_quadrant":"ha_hv"}
       title: Happy
-    - payload: /mood_curr{"mood":"glad"}
+    - payload: /mood_curr{"mood":"glad", "mood_quadrant":"ha_hv"}
       title: Glad
-    - payload: /mood_curr{"mood":"excited"}
+    - payload: /mood_curr{"mood":"excited", "mood_quadrant":"ha_hv"}
       title: Excited
-    - payload: /mood_curr{"mood":"aroused"}
+    - payload: /mood_curr{"mood":"aroused", "mood_quadrant":"ha_hv"}
       title: Aroused
-    - payload: /mood_curr{"mood":"astonished"}
+    - payload: /mood_curr{"mood":"astonished", "mood_quadrant":"ha_hv"}
       title: Astonished
-    - payload: /mood_curr{"mood":"alarmed"}
+    - payload: /mood_curr{"mood":"alarmed", "mood_quadrant":"ha_lv"}
       title: Alarmed
-    - payload: /mood_curr{"mood":"angry"}
+    - payload: /mood_curr{"mood":"angry", "mood_quadrant":"ha_lv"}
       title: Angry
-    - payload: /mood_curr{"mood":"annoyed"}
+    - payload: /mood_curr{"mood":"annoyed", "mood_quadrant":"ha_lv"}
       title: Annoyed
-    - payload: /mood_curr{"mood":"distressed"}
+    - payload: /mood_curr{"mood":"distressed", "mood_quadrant":"ha_lv"}
       title: Distressed
-    - payload: /mood_curr{"mood":"afraid"}
+    - payload: /mood_curr{"mood":"afraid", "mood_quadrant":"ha_lv"}
       title: Afraid
-    - payload: /mood_curr{"mood":"frustrated"}
+    - payload: /mood_curr{"mood":"frustrated", "mood_quadrant":"ha_lv"}
       title: Frustrated
-    - payload: /mood_curr{"mood":"miserable"}
+    - payload: /mood_curr{"mood":"miserable", "mood_quadrant":"la_lv"}
       title: Miserable
-    - payload: /mood_curr{"mood":"depressed"}
+    - payload: /mood_curr{"mood":"depressed", "mood_quadrant":"la_lv"}
       title: Depressed
-    - payload: /mood_curr{"mood":"gloomy"}
+    - payload: /mood_curr{"mood":"gloomy", "mood_quadrant":"la_lv"}
       title: Gloomy
-    - payload: /mood_curr{"mood":"tense"}
+    - payload: /mood_curr{"mood":"tense", "mood_quadrant":"la_lv"}
       title: Tense
-    - payload: /mood_curr{"mood":"droopy"}
+    - payload: /mood_curr{"mood":"droopy", "mood_quadrant":"la_lv"}
       title: Droopy
-    - payload: /mood_curr{"mood":"sad"}
+    - payload: /mood_curr{"mood":"sad", "mood_quadrant":"la_lv"}
       title: Sad
-    - payload: /mood_curr{"mood":"tired"}
+    - payload: /mood_curr{"mood":"tired", "mood_quadrant":"la_lv"}
       title: Tired
-    - payload: /mood_curr{"mood":"bored"}
+    - payload: /mood_curr{"mood":"bored", "mood_quadrant":"la_lv"}
       title: Bored
-    - payload: /mood_curr{"mood":"sleepy"}
+    - payload: /mood_curr{"mood":"sleepy", "mood_quadrant":"la_lv"}
       title: Sleepy
-    - payload: /mood_curr{"mood":"serene"}
+    - payload: /mood_curr{"mood":"serene", "mood_quadrant":"la_hv"}
       title: Serene
-    - payload: /mood_curr{"mood":"relaxed"}
+    - payload: /mood_curr{"mood":"relaxed", "mood_quadrant":"la_hv"}
       title: Relaxed
-    - payload: /mood_curr{"mood":"calm"}
+    - payload: /mood_curr{"mood":"calm", "mood_quadrant":"la_hv"}
       title: Calm
-    - payload: /mood_curr{"mood":"tranquil"}
+    - payload: /mood_curr{"mood":"tranquil", "mood_quadrant":"la_hv"}
       title: Tranquil
-    - payload: /mood_curr{"mood":"content"}
+    - payload: /mood_curr{"mood":"content", "mood_quadrant":"la_hv"}
       title: Content
-    - payload: /mood_curr{"mood":"neutral"}
+    - payload: /mood_curr{"mood":"neutral", "mood_quadrant":"neutral"}
       title: Neutral
     text: How are you feeling today?
     
   # Some alternative formulations generated with ChatGPT on 03-02-2023.
+  utter_mood_response:
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "ha_hv"
+      text: "Yay, always good to hear that somebody is feeling {mood}!"
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "ha_hv"
+      text: "Awesome, you must be having a good day!"
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "la_hv"
+      text: "Nice, that's good to hear."
   utter_mood_positive_valence_high_arousal_quadrant:
   - text: "Yay, always good to hear that somebody is feeling {mood}!"
   - text: "Awesome, you must be having a good day!"

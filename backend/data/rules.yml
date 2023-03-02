@@ -11,6 +11,7 @@ rules:
   wait_for_user_input: false
   
 - rule: name session 1
+  condition:
     - active_loop: user_name_form
   steps:
   - action: user_name_form
@@ -21,7 +22,7 @@ rules:
 - rule: mood session 1 
   steps:
   - intent: mood_curr
-  - action: action_answer_mood
+  - action: utter_mood_response
   - action: action_save_name_mood_to_db
   - action: utter_purpose_1
   - action: utter_purpose_2
