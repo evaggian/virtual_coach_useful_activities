@@ -8,6 +8,13 @@ rules:
   - action: utter_greet_first_time
   - action: user_name_form
   - active_loop: user_name_form
+  wait_for_user_input: false
+  
+- rule: name session 1
+  condition:
+    - active_loop: user_name_form
+  steps:
+  - action: user_name_form
   - active_loop: null
   - action: utter_confirm_name
   - action: utter_ask_for_mood
