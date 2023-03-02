@@ -16,4 +16,4 @@ VOLUME /app
 VOLUME /app/models
 #VOLUME /app/actions
 
-CMD [ "run","-m","/app/models","--enable-api","--cors","*","--debug" ]
+CMD [ "run","-m","/app/models","--enable-api","--cors","*","--debug", "--endpoints", "endpoints.yml"]
