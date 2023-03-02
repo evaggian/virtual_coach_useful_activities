@@ -11,7 +11,6 @@ rules:
   wait_for_user_input: false
   
 - rule: name session 1
-  condition:
     - active_loop: user_name_form
   steps:
   - action: user_name_form
