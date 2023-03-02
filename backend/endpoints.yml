@@ -22,9 +22,9 @@ tracker_store:
     dialect: "postgresql"  # the dialect used to interact with the db
     url: "postgres:5432"  # (optional) host of the sql db, e.g. "localhost"
     db: "rasa"  # path to your db
-    username: "root" # username used for authentication
-    password: "root" # password used for authentication
-    login_db: "postgres"
+    username: "root"  # username used for authentication
+    password: "root"  # password used for authentication
+    login_db: "postgres"  # needed to create rasa.db
 
 #tracker_store:
 #    type: redis

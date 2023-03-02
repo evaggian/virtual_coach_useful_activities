@@ -7,7 +7,7 @@ Based on this Github repository (https://github.com/AmirStudy/Rasa_Deployment) a
 
 ## Components
 
-This virtual coach consists of a backend based on Rasa Open Source (backend), a custom action server (actions), a frontend (frontend), and a database (db).
+This virtual coach consists of a backend based on Rasa Open Source (backend), a custom action server (actions), a frontend (frontend), a database (db), and an SQLTrackerStore.
 
 
 ## Setup on Google Compute Engine
@@ -49,8 +49,8 @@ To run this project on a Google Compute Engine, I followed these steps:
       - Follow the instructions here: https://cloud.google.com/compute/docs/ip-addresses/reserve-static-external-ip-address.
 	  - You have to pay for every month, but it is rather cheap.
    - Make sure you turn off your instance whenever you do not need it, as you are charged for the time that it is up.
-   - Set the IP address of your Google Compute Engine instance in the function `send(message)` in script.js: `url: "http://<your_instance_IP>:5005/webhooks/rest/webhook"`. This is why it helps to have a static IP address.
-   - Clone your project from Github.
+   - Set the IP address of your Google Compute Engine instance in the function `send(message)` in the file frontend/static/js/script.js: `url: "http://<your_instance_IP>:5005/webhooks/rest/webhook"`. This is why it helps to have a static IP address.
+   - Clone your project from Github on the Google Compute Engine instance.
    - Navigate to your project folder and start your project with `docker-compose up`.
    - You can access the frontend from your browser via `http://<your_instance_IP>:3000/?userid=<some_user_id>`.
    - Open the chat here:
@@ -65,6 +65,23 @@ To run this project on a Google Compute Engine, I followed these steps:
    
    <img src = "Readme_images/chat_fullscreen.PNG" width = "250" title="Fullscreen chat.">
    
+   
+This project uses an SQLTrackerStore (https://rasa.com/docs/rasa/tracker-stores/) to store the conversation history in a database:
+   - A nice way to see the contents of this database is using the program DBeaver.
+   - First also open port 5432 on your Google Compute Engine instance for tcp. There is no need to restart the instance after opening the port.
+   - To configure DBeaver, add a new database connection:
+   
+   <img src = "Readme_images/dbeaver_1.PNG" width = "250" title="DBeaver 1.">
+   
+   - Select a "PostgresSQL" connection.
+   - Enter your instance IP address as the "Host", keep the "Port" set to 5432, enter the username and password used in docker-compose.yml, and set the "Database" to "rasa".
+   - After connecting, you can inspect the database content by clicking on the "events" table:
+   
+   <img src = "Readme_images/dbeaver_2.PNG" width = "250" title="DBeaver 2.">
+   
+   - After clicking on "Data," you can see the table content. The "sender_id" is the "<some_user_id>" you used when accessing your frontend:
+   
+   <img src = "Readme_images/dbeaver_3.PNG" width = "250" title="DBeaver 3.">
 
 
 Some errors I got during the setup:
