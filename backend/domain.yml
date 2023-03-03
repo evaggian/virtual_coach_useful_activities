@@ -221,9 +221,7 @@ responses:
       title: Content
     - payload: /mood_curr{"mood":"neutral", "mood_quadrant":"neutral"}
       title: Neutral
-    text: How are you feeling today?
-    
-  # Some alternative formulations generated with ChatGPT on 03-02-2023.
+    text: "How are you feeling today?"
   utter_mood_response:
     - condition:
         - type: slot
