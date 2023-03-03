@@ -2,6 +2,15 @@ version: "3.1"
 
 rules:
 
+
+- rule: handle message with low NLU confidence
+  steps:
+  - intent: nlu_fallback
+  - action: utter_default
+  - action: utter_default_close_session
+  - action: action_end_dialog
+
+
 - rule: start session 1
   steps:
   - intent: start_session1
@@ -17,13 +26,13 @@ rules:
   - action: user_name_form
   - active_loop: null
   - action: utter_confirm_name
-  - action: utter_ask_for_mood
+  - action: utter_ask_for_mood_session1
   
 - rule: mood session 1 
   steps:
-  - intent: mood_curr
+  - intent: mood_curr_session1
   - action: utter_mood_response
-  - action: action_save_name_mood_to_db
+  - action: action_save_name_to_db
   - action: utter_purpose_1
   - action: utter_purpose_2
   - action: utter_purpose_3
@@ -53,12 +62,68 @@ rules:
   - action: utter_state_question_intro
   - action: utter_state_question_1
   
+
+- rule: start session 2
+  steps:
+  - intent: start_session2
+  - action: utter_greet_repeat
+  - action: utter_ask_for_mood_session2
   
-  #- intent: mood_curr
-  #- action: action_answer_mood
-  #- action: utter_intro_session2_1
-  #- action: utter_intro_session2_2
-  #- action: utter_intro_session2_3
-  #- action: utter_intro_session2_4
-  #- action: utter_intro_session2_5
-  #- intent: confirm
+- rule: mood and intro session 2
+  steps:
+  - intent: mood_curr_session2
+  - action: utter_mood_response
+  - action: utter_intro_session2_1
+  - action: utter_intro_session2_2
+  - action: utter_intro_session2_3
+  - action: utter_intro_session2_4
+  - action: utter_intro_session2_5
+
+- rule: activity effort session 2
+  steps:
+  - intent: confirm_intro_session2
+  - action: utter_last_activity_short
+  - action: utter_last_activity_effort_intro
+  - action: utter_last_activity_effort
+  
+
+- rule: activity experience
+  steps:
+  - intent: effort_answer
+  - action: utter_respond_effort
+  - action: activity_experience_form
+  - active_loop: activity_experience_form
+  wait_for_user_input: false
+  
+- rule: activity experience ask add or change
+  condition:
+    - active_loop: activity_experience_form
+  steps:
+  - action: activity_experience_form
+  - active_loop: null
+  - action: utter_repeat_activity_completion_answer
+  
+- rule: activity experience confirmed so start state questions
+  steps:
+  - intent: confirm_activity_experience
+  - action: utter_great
+  - action: utter_state_question_intro
+  - action: utter_state_question_1
+  
+- rule: activity experience denied
+  steps:
+  - intent: deny_activity_experience
+  - action: activity_experience_mod_form
+  - active_loop: activity_experience_mod_form
+  wait_for_user_input: false
+  
+  
+- rule: activity experience modified so start state questions
+  condition:
+    - active_loop: activity_experience_mod_form
+  steps:
+  - action: activity_experience_mod_form
+  - active_loop: null
+  - action: utter_thank_activity_experience_mod
+  - action: utter_state_question_intro
+  - action: utter_state_question_1

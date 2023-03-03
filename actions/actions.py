@@ -5,16 +5,28 @@
 # https://rasa.com/docs/rasa/custom-actions
 
 
+from datetime import datetime
 from definitions import (DATABASE_HOST, DATABASE_PASSWORD, 
-                         DATABASE_PORT, DATABASE_USER,
-                         MOODS_HA_LV, MOODS_LA_LV, 
-                         MOODS_LA_HV)
+                         DATABASE_PORT, DATABASE_USER)
 from rasa_sdk import Action, FormValidationAction, Tracker
 from rasa_sdk.executor import CollectingDispatcher
-from rasa_sdk.events import SlotSet
+from rasa_sdk.events import FollowupAction, SlotSet
 from typing import Any, Dict, List, Optional, Text
 
 import mysql.connector
+
+
+class ActionEndDialog(Action):
+    """Action to cleanly terminate the dialog."""
+    # ATM this action just call the default restart action
+    # but this can be used to perform actions that might be needed
+    # at the end of each dialog
+    def name(self):
+        return "action_end_dialog"
+
+    async def run(self, dispatcher, tracker, domain):
+
+        return [FollowupAction('action_restart')]
 
 
 def get_latest_bot_utterance(events) -> Optional[Any]:
@@ -39,39 +51,19 @@ def get_latest_bot_utterance(events) -> Optional[Any]:
         last_utterance = None
 
     return last_utterance
-
-
-# Answer based on mood
-class ActionAnswerMood(Action):
-    def name(self):
-        return "action_answer_mood"
-
-    async def run(self, dispatcher, tracker, domain):
-
-        curr_mood = tracker.get_slot('mood')
-
-        if curr_mood == "neutral":
-            dispatcher.utter_message(response="utter_mood_neutral")
-        elif curr_mood in MOODS_HA_LV:
-            dispatcher.utter_message(response="utter_mood_negative_valence_high_arousal_quadrant")
-        elif curr_mood in MOODS_LA_LV:
-            dispatcher.utter_message(response="utter_mood_negative_valence_low_arousal_quadrant")
-        elif curr_mood in MOODS_LA_HV:
-            dispatcher.utter_message(response="utter_mood_positive_valence_low_arousal_quadrant")
-        else:
-            dispatcher.utter_message(response="utter_mood_positive_valence_high_arousal_quadrant")
-
-        return []
     
     
 class ActionNameMood(Action):
 
     def name(self) -> Text:
-        return "action_save_name_mood_to_db"
+        return "action_save_name_to_db"
 
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        
+        now = datetime.now()
+        formatted_date = now.strftime('%Y-%m-%d %H:%M:%S')
 
         conn = mysql.connector.connect(
             user=DATABASE_USER,
@@ -81,10 +73,10 @@ class ActionNameMood(Action):
             database='db'
         )
         cur = conn.cursor(prepared=True)
-        query = "INSERT INTO users VALUES(%s, %s, %s)"
+        query = "INSERT INTO users(prolific_id, name, time) VALUES(%s, %s, %s)"
         queryMatch = [tracker.current_state()['sender_id'], 
                       tracker.get_slot("user_name_slot"),
-                      tracker.get_slot("mood")]
+                      formatted_date]
         cur.execute(query, queryMatch)
         conn.commit()
         conn.close()
@@ -110,3 +102,47 @@ class ValidateUserNameForm(FormValidationAction):
             return {"user_name_slot": None}
 
         return {"user_name_slot": value}
+    
+
+class ValidateActivityExperienceForm(FormValidationAction):
+    def name(self) -> Text:
+        return 'validate_activity_experience_form'
+
+    def validate_activity_experience_slot(
+            self, value: Text, dispatcher: CollectingDispatcher,
+            tracker: Tracker, domain: Dict[Text, Any]) -> Dict[Text, Any]:
+        # pylint: disable=unused-argument
+        """Validate activity_experience_slot input."""
+        last_utterance = get_latest_bot_utterance(tracker.events)
+
+        if last_utterance != 'utter_ask_activity_experience_slot':
+            return {"activity_experience_slot": None}
+
+        # people should either type "none" or say a bit more
+        if not (len(value) >= 10 or "none" in value.lower()):
+            dispatcher.utter_message(response="utter_provide_more_detail")
+            return {"activity_experience_slot": None}
+
+        return {"activity_experience_slot": value}
+    
+
+class ValidateActivityExperienceModForm(FormValidationAction):
+    def name(self) -> Text:
+        return 'validate_activity_experience_mod_form'
+
+    def validate_activity_experience_mod_slot(
+            self, value: Text, dispatcher: CollectingDispatcher,
+            tracker: Tracker, domain: Dict[Text, Any]) -> Dict[Text, Any]:
+        # pylint: disable=unused-argument
+        """Validate activity_experience_mod_slot input."""
+        last_utterance = get_latest_bot_utterance(tracker.events)
+
+        if last_utterance != 'utter_ask_activity_experience_mod_slot':
+            return {"activity_experience_slot": None}
+
+        # people should either type "none" or say a bit more
+        if not (len(value) >= 5 or "none" in value.lower()):
+            dispatcher.utter_message(response="utter_provide_more_detail")
+            return {"activity_experience_mod_slot": None}
+
+        return {"activity_experience_mod_slot": value}

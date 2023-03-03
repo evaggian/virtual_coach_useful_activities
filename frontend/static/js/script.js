@@ -15,7 +15,7 @@ $(document).ready(function () {
 	user_id = userid;
 	
 	//start a session
-	send("/start_session1");
+	send("/start_session1{'session_num':'1'}");
 
 })
 

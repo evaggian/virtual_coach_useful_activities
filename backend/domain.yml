@@ -1,25 +1,50 @@
 version: "3.1"
 
 intents:
-- mood_curr
+### session 1
+- mood_curr_session1
 - start_session1
-- confirm
 - confirm_purpose
 - confirm_usage
 - confirm_intro_session1
+
+### session 2
 - start_session2
+- mood_curr_session2
+- confirm_intro_session2
+
+### activity experience
+- effort_answer
+- confirm_activity_experience
+- deny_activity_experience
 
 entities:
+- session_num:
+    influence_conversation: false
+
 - mood:
     influence_conversation: false
 - mood_quadrant:
     influence_conversation: false
+
 - state_1:
+    influence_conversation: false
+
+- effort:
+    influence_conversation: false
+- effort_level:
     influence_conversation: false
 
 
 slots:
   ### intro/general
+  session_num:
+    type: text
+    initial_value: ''
+    influence_conversation: false
+    mappings:
+    - type: from_entity
+      entity: session_num
   mood:
     type: text
     initial_value: ''
@@ -51,6 +76,39 @@ slots:
     mappings:
     - type: from_entity
       entity: state_1
+      
+  ### activity experience
+  # effort
+  effort:
+    type: text
+    initial_value: ''
+    influence_conversation: false
+    mappings:
+    - type: from_entity
+      entity: effort
+  effort_level:
+    type: text
+    initial_value: ''
+    influence_conversation: false
+    mappings:
+    - type: from_entity
+      entity: effort_level
+  activity_experience_slot:
+    type: text
+    initial_value: ''
+    influence_conversation: false
+    mappings:
+    - type: from_text
+      conditions:
+        - active_loop: activity_experience_form  
+  activity_experience_mod_slot:
+    type: text
+    initial_value: ''
+    influence_conversation: false
+    mappings:
+    - type: from_text
+      conditions:
+        - active_loop: activity_experience_mod_form  
     
 
 responses:
@@ -122,13 +180,219 @@ responses:
   - text: "And finally, I'll recommend you a new preparatory activity to do after this and before the next sesion, which you'll again get invited to about 2 days from now."
   utter_intro_session2_5:
   - buttons:
-    - payload: /confirm
+    - payload: /confirm_intro_session2
       title: "I've finished"
     text: "Let me know when you've finished reading this session overview."
     
     
   ### Ask activity experience (effort, experience, dropout)
-    
+  utter_last_activity_short:
+  - text: "Great! Last time I suggested you to ... ."
+  utter_last_activity_effort_intro:
+  - text: "Please rate the overall effort you put into doing this activity."
+  utter_last_activity_effort:
+  - buttons:
+    - payload: /effort_answer{"effort":"0", "effort_level":"low"}
+      title: "0 (nothing)"
+    - payload: /effort_answer{"effort":"1", "effort_level":"low"}
+      title: "1"
+    - payload: /effort_answer{"effort":"2", "effort_level":"low"}
+      title: "2"
+    - payload: /effort_answer{"effort":"3", "effort_level":"low"}
+      title: "3"
+    - payload: /effort_answer{"effort":"4", "effort_level":"medium"}
+      title: "4"
+    - payload: /effort_answer{"effort":"5", "effort_level":"medium"}
+      title: "5"
+    - payload: /effort_answer{"effort":"6", "effort_level":"medium"}
+      title: "6"
+    - payload: /effort_answer{"effort":"7", "effort_level":"high"}
+      title: "7"
+    - payload: /effort_answer{"effort":"8", "effort_level":"high"}
+      title: "8"
+    - payload: /effort_answer{"effort":"9", "effort_level":"high"}
+      title: "9"
+    - payload: /effort_answer{"effort":"10", "effort_level":"high"}
+      title: "10 (extremely strong)"
+    text: "Please answer honestly. Recall that doing your activity is voluntary and that your answer to this question thus does **not** impact your payment."
+  utter_respond_effort:
+  - condition:
+      - type: slot
+        name: effort_level
+        value: "low"
+    text: "That's too bad. This is not uncommon at the start."
+  - condition:
+      - type: slot
+        name: effort_level
+        value: "low"
+    text: "I see, that's a pity. This can happen!"
+  - condition:
+      - type: slot
+        name: effort_level
+        value: "low"
+    text: "Hmm, that's a pity. Maybe you've been busy."
+  - condition:
+      - type: slot
+        name: effort_level
+        value: "low"
+    text: "Ah that's a shame. This can happen at the beginning."
+  - condition:
+      - type: slot
+        name: effort_level
+        value: "low"
+    text: "Ah, I understand. That's unfortunate, but it happens sometimes."
+  - condition:
+      - type: slot
+        name: effort_level
+        value: "low"
+    text: "That's a shame. Don't worry, it's normal in the beginning."
+  - condition:
+      - type: slot
+        name: effort_level
+        value: "low"
+    text: "That's too bad. Maybe you had a lot going on."
+  - condition:
+      - type: slot
+        name: effort_level
+        value: "low"
+    text: "Oh, that's too bad. Perhaps you've had a lot on your plate."
+  - condition:
+      - type: slot
+        name: effort_level
+        value: "medium"
+    text: "Nice that you gave it a try!"
+  - condition:
+      - type: slot
+        name: effort_level
+        value: "medium"
+    text: "Cool, I'm happy to hear that you worked on the activity."
+  - condition:
+      - type: slot
+        name: effort_level
+        value: "medium"
+    text: "Nice to hear that you tried the activity!"
+  - condition:
+      - type: slot
+        name: effort_level
+        value: "medium"
+    text: "Cool, it's nice that you gave it a shot!"
+  - condition:
+      - type: slot
+        name: effort_level
+        value: "medium"
+    text: "I'm happy to hear that you gave the activity a shot."
+  - condition:
+      - type: slot
+        name: effort_level
+        value: "medium"
+    text: "That's good to hear that you worked on the activity."
+  - condition:
+      - type: slot
+        name: effort_level
+        value: "medium"
+    text: "Thanks for giving the activity a go!"
+  - condition:
+      - type: slot
+        name: effort_level
+        value: "high"
+    text: "Yay, congrats!"
+  - condition:
+      - type: slot
+        name: effort_level
+        value: "high"
+    text: "Nice, good job!"
+  - condition:
+      - type: slot
+        name: effort_level
+        value: "high"
+    text: "Awesome, well done!"
+  - condition:
+      - type: slot
+        name: effort_level
+        value: "high"
+    text: "Nice, congratulations!"
+  - condition:
+      - type: slot
+        name: effort_level
+        value: "high"
+    text: "Excellent, way to go!"
+  - condition:
+      - type: slot
+        name: effort_level
+        value: "high"
+    text: "Yay, nice work!"
+  - condition:
+      - type: slot
+        name: effort_level
+        value: "high"
+    text: "Ah nicely done!"
+  utter_ask_activity_experience_slot:
+  - condition:
+      - type: slot
+        name: effort_level
+        value: "high"
+    text: "How did you approach, do, or experience your assigned activity? Use the text field."
+  - condition:
+      - type: slot
+        name: effort_level
+        value: "medium"
+    text: "How did you approach, do, or experience your assigned activity? Use the text field."
+  - condition:
+      - type: slot
+        name: effort_level
+        value: "low"
+    text: "How did you approach, do, or experience your assigned activity? If you have no feedback on the activity, just type 'None' in the text field."
+  utter_repeat_activity_completion_answer:
+  - text: "This is what I got: *{activity_experience}*\n\nWould you like to add or change anything?"
+    buttons:
+    - payload: /confirm_activity_experience
+      title: Yes
+    - payload: /deny_activity_experience
+      title: No
+  - text: "I got this: *{activity_experience}*\n\nDo you want to add or modify anything?"
+    buttons:
+    - payload: /confirm_activity_experience
+      title: Yes
+    - payload: /deny_activity_experience
+      title: No
+  - text: "I received this: *{activity_experience}*\n\nIs there something that you'd like to add or change?"
+    buttons:
+    - payload: /confirm_activity_experience
+      title: Yes
+    - payload: /deny_activity_experience
+      title: No
+  - text: "This is what you told me: *{activity_experience}*\n\nIs there anything that you want to add or alter?"
+    buttons:
+    - payload: /confirm_activity_experience
+      title: Yes
+    - payload: /deny_activity_experience
+      title: No
+  - text: "I got this from you: *{activity_experience}*\n\nIs there anything that I should add or modify about your response?"
+    buttons:
+    - payload: /confirm_activity_experience
+      title: Yes
+    - payload: /deny_activity_experience
+      title: No
+  - text: "This is the response I got: *{activity_experience}*\n\nDo you want to add or change anything?"
+    buttons:
+    - payload: /confirm_activity_experience
+      title: Yes
+    - payload: /deny_activity_experience
+      title: No
+  utter_ask_experience_mod_slot:
+  - text: "Okay, please tell me what you'd like to add or alter."
+  - text: "OK, what would you like to add or change? Use the text field."
+  - text: "Okay, what is it that you'd like to add or alter? Use the text field."
+  - text: "Okay, kindly tell me what it is that you'd like to add or modify."
+  - text: "I see, what do you want to modify or add?"
+  - text: "Alright, can you tell me what modifications or additions you'd like to make?"
+  utter_thank_activity_experience_mod:
+  - text: Alright, thanks for the clarification!
+  - text: Cool, thanks for clarifying that.
+  - text: Cool, thanks for making that clear.
+  - text: Alright, good that you point that out!
+  - text: "I see. Thank you for the clarification."
+  - text: "Got it! Thanks for letting me know."
     
   ### Ask state questions
   utter_state_question_intro:
@@ -161,68 +425,131 @@ responses:
 
   
   ### Mood
-  utter_ask_for_mood:
+  utter_ask_for_mood_session1:
   - buttons:
-    - payload: /mood_curr{"mood":"satisfied", "mood_quadrant":"ha_hv"}
+    - payload: /mood_curr_session1{"mood":"satisfied", "mood_quadrant":"ha_hv"}
       title: Satisfied
-    - payload: /mood_curr{"mood":"pleased", "mood_quadrant":"ha_hv"}
+    - payload: /mood_curr_session1{"mood":"pleased", "mood_quadrant":"ha_hv"}
       title: Pleased
-    - payload: /mood_curr{"mood":"delighted", "mood_quadrant":"ha_hv"}
+    - payload: /mood_curr_session1{"mood":"delighted", "mood_quadrant":"ha_hv"}
       title: Delighted
-    - payload: /mood_curr{"mood":"happy", "mood_quadrant":"ha_hv"}
+    - payload: /mood_curr_session1{"mood":"happy", "mood_quadrant":"ha_hv"}
       title: Happy
-    - payload: /mood_curr{"mood":"glad", "mood_quadrant":"ha_hv"}
+    - payload: /mood_curr_session1{"mood":"glad", "mood_quadrant":"ha_hv"}
       title: Glad
-    - payload: /mood_curr{"mood":"excited", "mood_quadrant":"ha_hv"}
+    - payload: /mood_curr_session1{"mood":"excited", "mood_quadrant":"ha_hv"}
       title: Excited
-    - payload: /mood_curr{"mood":"aroused", "mood_quadrant":"ha_hv"}
+    - payload: /mood_curr_session1{"mood":"aroused", "mood_quadrant":"ha_hv"}
       title: Aroused
-    - payload: /mood_curr{"mood":"astonished", "mood_quadrant":"ha_hv"}
+    - payload: /mood_curr_session1{"mood":"astonished", "mood_quadrant":"ha_hv"}
       title: Astonished
-    - payload: /mood_curr{"mood":"alarmed", "mood_quadrant":"ha_lv"}
+    - payload: /mood_curr_session1{"mood":"alarmed", "mood_quadrant":"ha_lv"}
       title: Alarmed
-    - payload: /mood_curr{"mood":"angry", "mood_quadrant":"ha_lv"}
+    - payload: /mood_curr_session1{"mood":"angry", "mood_quadrant":"ha_lv"}
       title: Angry
-    - payload: /mood_curr{"mood":"annoyed", "mood_quadrant":"ha_lv"}
+    - payload: /mood_curr_session1{"mood":"annoyed", "mood_quadrant":"ha_lv"}
       title: Annoyed
-    - payload: /mood_curr{"mood":"distressed", "mood_quadrant":"ha_lv"}
+    - payload: /mood_curr_session1{"mood":"distressed", "mood_quadrant":"ha_lv"}
       title: Distressed
-    - payload: /mood_curr{"mood":"afraid", "mood_quadrant":"ha_lv"}
+    - payload: /mood_curr_session1{"mood":"afraid", "mood_quadrant":"ha_lv"}
       title: Afraid
-    - payload: /mood_curr{"mood":"frustrated", "mood_quadrant":"ha_lv"}
+    - payload: /mood_curr_session1{"mood":"frustrated", "mood_quadrant":"ha_lv"}
       title: Frustrated
-    - payload: /mood_curr{"mood":"miserable", "mood_quadrant":"la_lv"}
+    - payload: /mood_curr_session1{"mood":"miserable", "mood_quadrant":"la_lv"}
       title: Miserable
-    - payload: /mood_curr{"mood":"depressed", "mood_quadrant":"la_lv"}
+    - payload: /mood_curr_session1{"mood":"depressed", "mood_quadrant":"la_lv"}
       title: Depressed
-    - payload: /mood_curr{"mood":"gloomy", "mood_quadrant":"la_lv"}
+    - payload: /mood_curr_session1{"mood":"gloomy", "mood_quadrant":"la_lv"}
       title: Gloomy
-    - payload: /mood_curr{"mood":"tense", "mood_quadrant":"la_lv"}
+    - payload: /mood_curr_session1{"mood":"tense", "mood_quadrant":"la_lv"}
       title: Tense
-    - payload: /mood_curr{"mood":"droopy", "mood_quadrant":"la_lv"}
+    - payload: /mood_curr_session1{"mood":"droopy", "mood_quadrant":"la_lv"}
       title: Droopy
-    - payload: /mood_curr{"mood":"sad", "mood_quadrant":"la_lv"}
+    - payload: /mood_curr_session1{"mood":"sad", "mood_quadrant":"la_lv"}
       title: Sad
-    - payload: /mood_curr{"mood":"tired", "mood_quadrant":"la_lv"}
+    - payload: /mood_curr_session1{"mood":"tired", "mood_quadrant":"la_lv"}
       title: Tired
-    - payload: /mood_curr{"mood":"bored", "mood_quadrant":"la_lv"}
+    - payload: /mood_curr_session1{"mood":"bored", "mood_quadrant":"la_lv"}
       title: Bored
-    - payload: /mood_curr{"mood":"sleepy", "mood_quadrant":"la_lv"}
+    - payload: /mood_curr_session1{"mood":"sleepy", "mood_quadrant":"la_lv"}
       title: Sleepy
-    - payload: /mood_curr{"mood":"serene", "mood_quadrant":"la_hv"}
+    - payload: /mood_curr_session1{"mood":"serene", "mood_quadrant":"la_hv"}
       title: Serene
-    - payload: /mood_curr{"mood":"relaxed", "mood_quadrant":"la_hv"}
+    - payload: /mood_curr_session1{"mood":"relaxed", "mood_quadrant":"la_hv"}
       title: Relaxed
-    - payload: /mood_curr{"mood":"calm", "mood_quadrant":"la_hv"}
+    - payload: /mood_curr_session1{"mood":"calm", "mood_quadrant":"la_hv"}
       title: Calm
-    - payload: /mood_curr{"mood":"tranquil", "mood_quadrant":"la_hv"}
+    - payload: /mood_curr_session1{"mood":"tranquil", "mood_quadrant":"la_hv"}
       title: Tranquil
-    - payload: /mood_curr{"mood":"content", "mood_quadrant":"la_hv"}
+    - payload: /mood_curr_session1{"mood":"content", "mood_quadrant":"la_hv"}
       title: Content
-    - payload: /mood_curr{"mood":"neutral", "mood_quadrant":"neutral"}
+    - payload: /mood_curr_session1{"mood":"neutral", "mood_quadrant":"neutral"}
       title: Neutral
     text: "How are you feeling today?"
+  utter_ask_for_mood_session2:
+  - buttons:
+    - payload: /mood_curr_session2{"mood":"satisfied", "mood_quadrant":"ha_hv"}
+      title: Satisfied
+    - payload: /mood_curr_session2{"mood":"pleased", "mood_quadrant":"ha_hv"}
+      title: Pleased
+    - payload: /mood_curr_session2{"mood":"delighted", "mood_quadrant":"ha_hv"}
+      title: Delighted
+    - payload: /mood_curr_session2{"mood":"happy", "mood_quadrant":"ha_hv"}
+      title: Happy
+    - payload: /mood_curr_session2{"mood":"glad", "mood_quadrant":"ha_hv"}
+      title: Glad
+    - payload: /mood_curr_session2{"mood":"excited", "mood_quadrant":"ha_hv"}
+      title: Excited
+    - payload: /mood_curr_session2{"mood":"aroused", "mood_quadrant":"ha_hv"}
+      title: Aroused
+    - payload: /mood_curr_session2{"mood":"astonished", "mood_quadrant":"ha_hv"}
+      title: Astonished
+    - payload: /mood_curr_session2{"mood":"alarmed", "mood_quadrant":"ha_lv"}
+      title: Alarmed
+    - payload: /mood_curr_session2{"mood":"angry", "mood_quadrant":"ha_lv"}
+      title: Angry
+    - payload: /mood_curr_session2{"mood":"annoyed", "mood_quadrant":"ha_lv"}
+      title: Annoyed
+    - payload: /mood_curr_session2{"mood":"distressed", "mood_quadrant":"ha_lv"}
+      title: Distressed
+    - payload: /mood_curr_session2{"mood":"afraid", "mood_quadrant":"ha_lv"}
+      title: Afraid
+    - payload: /mood_curr_session2{"mood":"frustrated", "mood_quadrant":"ha_lv"}
+      title: Frustrated
+    - payload: /mood_curr_session2{"mood":"miserable", "mood_quadrant":"la_lv"}
+      title: Miserable
+    - payload: /mood_curr_session2{"mood":"depressed", "mood_quadrant":"la_lv"}
+      title: Depressed
+    - payload: /mood_curr_session2{"mood":"gloomy", "mood_quadrant":"la_lv"}
+      title: Gloomy
+    - payload: /mood_curr_session2{"mood":"tense", "mood_quadrant":"la_lv"}
+      title: Tense
+    - payload: /mood_curr_session2{"mood":"droopy", "mood_quadrant":"la_lv"}
+      title: Droopy
+    - payload: /mood_curr_session2{"mood":"sad", "mood_quadrant":"la_lv"}
+      title: Sad
+    - payload: /mood_curr_session2{"mood":"tired", "mood_quadrant":"la_lv"}
+      title: Tired
+    - payload: /mood_curr_session2{"mood":"bored", "mood_quadrant":"la_lv"}
+      title: Bored
+    - payload: /mood_curr_session2{"mood":"sleepy", "mood_quadrant":"la_lv"}
+      title: Sleepy
+    - payload: /mood_curr_session2{"mood":"serene", "mood_quadrant":"la_hv"}
+      title: Serene
+    - payload: /mood_curr_session2{"mood":"relaxed", "mood_quadrant":"la_hv"}
+      title: Relaxed
+    - payload: /mood_curr_session2{"mood":"calm", "mood_quadrant":"la_hv"}
+      title: Calm
+    - payload: /mood_curr_session2{"mood":"tranquil", "mood_quadrant":"la_hv"}
+      title: Tranquil
+    - payload: /mood_curr_session2{"mood":"content", "mood_quadrant":"la_hv"}
+      title: Content
+    - payload: /mood_curr_session2{"mood":"neutral", "mood_quadrant":"neutral"}
+      title: Neutral
+    text: "How are you feeling today?"
+  # Response depends on quadrant that mood falls in
   utter_mood_response:
+    # high arousal, high valence
     - condition:
         - type: slot
           name: mood_quadrant
@@ -236,72 +563,247 @@ responses:
     - condition:
         - type: slot
           name: mood_quadrant
+          value: "ha_hv"
+      text: "Fantastic, that's very good to hear!"
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "ha_hv"
+      text: "Great, I'm happy to hear that that you're feeling {mood}!"
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "ha_hv"
+      text: "Fantastic, I'm happy to hear that!"
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "ha_hv"
+      text: "That's great news, I'm so happy that you're feeling {mood}!"
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "ha_hv"
+      text: "Good for you, I'm glad you're feeling {mood}!"
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "ha_hv"
+      text: "Excellent, it's good to hear that you're feeling {mood}!"
+    # low arousal, high valence
+    - condition:
+        - type: slot
+          name: mood_quadrant
           value: "la_hv"
       text: "Nice, that's good to hear."
-  utter_mood_positive_valence_high_arousal_quadrant:
-  - text: "Yay, always good to hear that somebody is feeling {mood}!"
-  - text: "Awesome, you must be having a good day!"
-  - text: "Fantastic, that's very good to hear!"
-  - text: "Great, I'm happy to hear that that you're feeling {mood}!"
-  - text: "Fantastic, I'm happy to hear that!"
-  - text: "That's great news, I'm so happy that you're feeling {mood}!"
-  - text: "Good for you, I'm glad you're feeling {mood}!"
-  - text: "Excellent, it's good to hear that you're feeling {mood}!"
-  utter_mood_positive_valence_low_arousal_quadrant:
-  - text: "Nice, that's good to hear."
-  - text: "Nice, I'm glad to hear that you're feeling {mood}."
-  - text: "Nice, I'm glad to hear that."
-  - text: "Nice, that's always good to hear."
-  - text: "Nice, glad you're feeling {mood}."
-  - text: "That's good, I'm glad that you're {mood}."
-  - text: "Nice, it's good to see you're {mood}."
-  - text: "Good to hear, so things are going well for you."
-  - text: 'Good to know, you seem to be doing well.'
-  utter_mood_negative_valence_low_arousal_quadrant:
-  - text: "I hate to hear that you're feeling {mood}. I hope you feel better soon! Meanwhile, maybe this session can help to cheer you up a bit."
-  - text: "I'm sorry to hear that you're feeling {mood}. Here's hoping this chat will bring some cheer and comfort to you."
-  - text: "Aww I feel for you, let's chat and try to turn that frown upside down."
-  - text: "I hope you're feeling better soon. In the meantime, let's see if we can brighten your day a bit with this chat."
-  - text: "Oh I'm so sorry that you're not having a good day. I hope it gets better soon and that I can cheer you up a little!"
-  - text: "Oh this doesn't feel good to hear. I'm sending positive vibes your way and hoping this session will make you feel a bit better."
-  - text: "So sorry about that! Feel better soon - hopefully talking about preparing to quit smoking and becoming more physically active can help a bit."
-  utter_mood_negative_valence_high_arousal_quadrant:
-  - text: "I'm really sorry to hear that you're feeling {mood}. I hope you feel better soon!"
-  - text: "Aww I'm so sorry to hear this. Hopefully you feel less {mood} soon!"
-  - text: "Oh that's a shame that you're not having a good day. I hope it gets better soon and that I can distract you a bit."
-  - text: "I hate to hear that today isn't a good day for you. Hopefully you feel better soon and that it's okay to proceed with this session!"
-  - text: "Aww what a shame. Hopefully you feel less {mood} soon!"
-  - text: "Oh that's unfortunate, let's hope for a brighter tomorrow."
-  - text: "Aww, I hope things look up for you soon."
-  - text: "That's not good news, I hope you feel better soon and that you're up for continuing with this session."
-  - text: "I'm sorry you're having a tough day, I hope it gets better soon. I hope you feel okay to move forward with this session."
-  utter_mood_neutral:
-  - text: "Ah, sounds like you're having a pretty average day."
-  - text: "Sounds like things are going fine for you."
-  - text: "I see, seems like you're doing okay then."
-  - text: "I see, just a normal day for you then."
-  - text: "Just an average day, got it."
-  - text: "Fair enough, you're having a day that's neither here nor there."
-  - text: "Okay, a day like any other."
-  - text: "Okay, so nothing out of the ordinary."
-  - text: "I see, not too bad, not too good, just an average day."
-  - text: "Ah, a typical day, I understand."
-  - text: "Ah nothing special, just a regular day for you."
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "la_hv"
+      text: "Nice, I'm glad to hear that you're feeling {mood}."
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "la_hv"
+      text: "Nice, I'm glad to hear that."
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "la_hv"
+      text: "Nice, that's always good to hear."
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "la_hv"
+      text: "Nice, glad you're feeling {mood}."
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "la_hv"
+      text: "That's good, I'm glad that you're {mood}."
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "la_hv"
+      text: "Nice, it's good to see you're {mood}."
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "la_hv"
+      text: "Good to hear, so things are going well for you."
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "la_hv"
+      text: 'Good to know, you seem to be doing well.'
+    # low valence, low arousal
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "la_lv"
+      text: "I hate to hear that you're feeling {mood}. I hope you feel better soon! Meanwhile, maybe this session can help to cheer you up a bit."
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "la_lv"
+      text: "I'm sorry to hear that you're feeling {mood}. Here's hoping this chat will bring some cheer and comfort to you."
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "la_lv"
+      text: "Aww I feel for you, let's chat and try to turn that frown upside down."
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "la_lv"
+      text: "I hope you're feeling better soon. In the meantime, let's see if we can brighten your day a bit with this chat."
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "la_lv"
+      text: "Oh I'm so sorry that you're not having a good day. I hope it gets better soon and that I can cheer you up a little!"
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "la_lv"
+      text: "Oh this doesn't feel good to hear. I'm sending positive vibes your way and hoping this session will make you feel a bit better."
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "la_lv"
+      text: "So sorry about that! Feel better soon - hopefully talking about preparing to quit smoking and becoming more physically active can help a bit."
+    # High arousal, low valence
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "ha_lv"
+      text: "I'm really sorry to hear that you're feeling {mood}. I hope you feel better soon!"
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "ha_lv"
+      text: "Aww I'm so sorry to hear this. Hopefully you feel less {mood} soon!"
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "ha_lv"
+      text: "Oh that's a shame that you're not having a good day. I hope it gets better soon and that I can distract you a bit."
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "ha_lv"
+      text: "I hate to hear that today isn't a good day for you. Hopefully you feel better soon and that it's okay to proceed with this session!"
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "ha_lv"
+      text: "Aww what a shame. Hopefully you feel less {mood} soon!"
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "ha_lv"
+      text: "Oh that's unfortunate, let's hope for a brighter tomorrow."
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "ha_lv"
+      text: "Aww, I hope things look up for you soon."
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "ha_lv"
+      text: "That's not good news, I hope you feel better soon and that you're up for continuing with this session."
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "ha_lv"
+      text: "I'm sorry you're having a tough day, I hope it gets better soon. I hope you feel okay to move forward with this session."
+    # Neutral
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "neutral"
+      text: "Ah, sounds like you're having a pretty average day."
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "neutral"
+      text: "Sounds like things are going fine for you."
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "neutral"
+      text: "I see, seems like you're doing okay then."
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "neutral"
+      text: "I see, just a normal day for you then."
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "neutral"
+      text: "Just an average day, got it."
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "neutral"
+      text: "Fair enough, you're having a day that's neither here nor there."
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "neutral"
+      text: "Okay, a day like any other."
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "neutral"
+      text: "Okay, so nothing out of the ordinary."
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "neutral"
+      text: "I see, not too bad, not too good, just an average day."
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "neutral"
+      text: "Ah, a typical day, I understand."
+    - condition:
+        - type: slot
+          name: mood_quadrant
+          value: "neutral"
+      text: "Ah nothing special, just a regular day for you."
   
+  
+  ### General
+  utter_great:
+  - text: Great!
+  - text: Perfect!
+  - text: Awesome!
+  
+  utter_provide_more_detail:
+  - text: "Hmm, can you describe this in a bit more detail?"
+  - text: "I see, could you elaborate a little more on this?"
+  - text: "I'd like to understand better, can you give me more details on this?"
+  - text: "I'm not quite following, could you provide more details?"
   
   utter_goodbye:
   - text: "Bye!"
   
   utter_default:
-  - text: "Sorry I do not (yet) understand what you mean."
+  - text: "There is a problem with this session."
+  
+  utter_default_close_session:
+  - text: "*PLEASE CLOSE THIS WINDOW AND CONTACT THE RESEARCHER ON PROLIFIC.*"
   
   utter_error_close_session:
   - text: "*PLEASE CLOSE THIS WINDOW. ANY FURTHER TYPING IN THIS CHAT RENDERS THIS SESSION INVALID.*"
  
 
 session_config:
-  session_expiration_time: 60
-  carry_over_slots_to_new_session: true
+  session_expiration_time: 5  # these are minutes
+  carry_over_slots_to_new_session: false
 
 
 # Needed so that slots can be set via buttons  
@@ -313,9 +815,17 @@ forms:
   user_name_form:
     required_slots:
         - user_name_slot
+  activity_experience_form:
+    required_slots:
+        - activity_experience_slot
+  activity_experience_mod_form:
+    required_slots:
+        - activity_experience_mod_slot
 
 
 actions:
-- action_answer_mood
-- action_save_name_mood_to_db
+- action_save_name_to_db
 - validate_user_name_form
+- validate_activity_experience_form
+- validate_activity_experience_mod_form
+- action_end_dialog
