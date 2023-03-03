@@ -153,7 +153,7 @@ responses:
   utter_intro_session1_5:
   - text: "And don't worry, I'll also send you your activity in a message on Prolific right after this session ends."
   utter_intro_session1_6:
-  - text: "Please note that doing your recommended activity after this session is voluntary and does <span class='bolded'>not</span> impact your payment."
+  - text: "Please note that doing your recommended activity after this session is voluntary and does not impact your payment."
   utter_intro_session1_7:
   - buttons:
     - payload : /confirm_intro_session1
@@ -214,7 +214,7 @@ responses:
       title: "9"
     - payload: /effort_answer{"effort":"10", "effort_level":"high"}
       title: "10 (extremely strong)"
-    text: 'Please answer honestly. Recall that doing your activity is voluntary and that your answer to this question thus does <span class="bolded">not</span> impact your payment.'
+    text: 'Please answer honestly. Recall that doing your activity is voluntary and that your answer to this question thus does not impact your payment.'
   utter_respond_effort:
   - condition:
       - type: slot
