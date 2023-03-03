@@ -27,6 +27,26 @@ class ActionEndDialog(Action):
     async def run(self, dispatcher, tracker, domain):
 
         return [FollowupAction('action_restart')]
+    
+
+class ActionDefaultFallbackEndDialog(Action):
+    """Executes the fallback action and goes back to the previous state
+    of the dialogue"""
+
+    def name(self) -> Text:
+        return "action_default_fallback_end_dialog"
+
+    async def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+        dispatcher.utter_message(template="utter_default")
+        dispatcher.utter_message(template="utter_default_close_session")
+
+        # End the dialog, which leads to a restart.
+        return [FollowupAction('action_end_dialog')]
 
 
 def get_latest_bot_utterance(events) -> Optional[Any]:
