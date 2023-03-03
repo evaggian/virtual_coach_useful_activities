@@ -2,5 +2,9 @@ version: "3.1"
 
 stories:
 
-
+- story: start session 2
+  steps:
+  - intent: start_session2
+  - action: utter_greet_repeat
+  - action: utter_ask_for_mood
   
