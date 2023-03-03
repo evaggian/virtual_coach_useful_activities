@@ -154,8 +154,11 @@ function setBotResponse(response) {
 
 				//check if the response contains "text"
 				if (response[i].hasOwnProperty("text")) {
-					var BotResponse = '<img class="botAvatar" src="/img/chatbot_picture.png"/><p class="botMsg">' + response[i].text + '</p><div class="clearfix"></div>';
-					$(BotResponse).appendTo(".chats").hide().fadeIn(1000);
+					var response_text = response[i].text.split("\n")
+					for (j = 0; j < response_text.length; j++){
+						var BotResponse = '<img class="botAvatar" src="/img/chatbot_picture.png"/><p class="botMsg">' + response_text[j] + '</p><div class="clearfix"></div>';
+						$(BotResponse).appendTo(".chats").hide().fadeIn(1000);
+					}
 				}
 
 				//check if the response contains "images"

@@ -177,7 +177,7 @@ responses:
   utter_intro_session2_3:
   - text: "Then I'll again ask you a few questions to learn about your current situation regarding preparing for quitting smoking."
   utter_intro_session2_4:
-  - text: "And finally, I'll recommend you a new preparatory activity to do after this and before the next sesion, which you'll again get invited to about 2 days from now."
+  - text: "And finally, I'll recommend you a new preparatory activity to do after this and before the next session, which you'll again get invited to about 2 days from now."
   utter_intro_session2_5:
   - buttons:
     - payload: /confirm_intro_session2
@@ -214,7 +214,7 @@ responses:
       title: "9"
     - payload: /effort_answer{"effort":"10", "effort_level":"high"}
       title: "10 (extremely strong)"
-    text: "Please answer honestly. Recall that doing your activity is voluntary and that your answer to this question thus does **not** impact your payment."
+    text: "Please answer honestly. Recall that doing your activity is voluntary and that your answer to this question thus does not impact your payment."
   utter_respond_effort:
   - condition:
       - type: slot
@@ -343,37 +343,37 @@ responses:
         value: "low"
     text: "How did you approach, do, or experience your assigned activity? If you have no feedback on the activity, just type 'None' in the text field."
   utter_repeat_activity_completion_answer:
-  - text: "This is what I got: *{activity_experience}*\n\nWould you like to add or change anything?"
+  - text: "This is what I got: {activity_experience_slot}\nWould you like to add or change anything?"
     buttons:
     - payload: /confirm_activity_experience
       title: Yes
     - payload: /deny_activity_experience
       title: No
-  - text: "I got this: *{activity_experience}*\n\nDo you want to add or modify anything?"
+  - text: "I got this: {activity_experience_slot}\nDo you want to add or modify anything?"
     buttons:
     - payload: /confirm_activity_experience
       title: Yes
     - payload: /deny_activity_experience
       title: No
-  - text: "I received this: *{activity_experience}*\n\nIs there something that you'd like to add or change?"
+  - text: "I received this: {activity_experience_slot}\nIs there something that you'd like to add or change?"
     buttons:
     - payload: /confirm_activity_experience
       title: Yes
     - payload: /deny_activity_experience
       title: No
-  - text: "This is what you told me: *{activity_experience}*\n\nIs there anything that you want to add or alter?"
+  - text: "This is what you told me: {activity_experience_slot}\nIs there anything that you want to add or alter?"
     buttons:
     - payload: /confirm_activity_experience
       title: Yes
     - payload: /deny_activity_experience
       title: No
-  - text: "I got this from you: *{activity_experience}*\n\nIs there anything that I should add or modify about your response?"
+  - text: "I got this from you: {activity_experience_slot}\nIs there anything that I should add or modify about your response?"
     buttons:
     - payload: /confirm_activity_experience
       title: Yes
     - payload: /deny_activity_experience
       title: No
-  - text: "This is the response I got: *{activity_experience}*\n\nDo you want to add or change anything?"
+  - text: "This is the response I got: {activity_experience_slot}\nDo you want to add or change anything?"
     buttons:
     - payload: /confirm_activity_experience
       title: Yes
@@ -396,7 +396,7 @@ responses:
     
   ### Ask state questions
   utter_state_question_intro:
-  - text: "Okay! Now I will ask you a few questions about your current situation regarding preparing for quitting smoking.\nIt's 9 questions overall so I can get a good grasp of where you stand."
+  - text: "Now I will ask you a few questions about your current situation regarding preparing for quitting smoking.\nIt's 9 questions overall so I can get a good grasp of where you stand."
   utter_state_question_1:
   - buttons:
     - payload: /confirm{"state_1":"-5"}
@@ -795,10 +795,10 @@ responses:
   - text: "There is a problem with this session."
   
   utter_default_close_session:
-  - text: "*PLEASE CLOSE THIS WINDOW AND CONTACT THE RESEARCHER ON PROLIFIC.*"
+  - text: "PLEASE CLOSE THIS WINDOW AND CONTACT THE RESEARCHER ON PROLIFIC."
   
   utter_error_close_session:
-  - text: "*PLEASE CLOSE THIS WINDOW. ANY FURTHER TYPING IN THIS CHAT RENDERS THIS SESSION INVALID.*"
+  - text: "PLEASE CLOSE THIS WINDOW. ANY FURTHER TYPING IN THIS CHAT RENDERS THIS SESSION INVALID."
  
 
 session_config:
