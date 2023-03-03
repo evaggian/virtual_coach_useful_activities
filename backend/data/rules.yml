@@ -53,12 +53,6 @@ rules:
   - action: utter_state_question_intro
   - action: utter_state_question_1
   
-- rule: start session 2
-  steps: 
-  - intent: start_session2
-  - action: utter_greet_repeat
-  - action: utter_ask_for_mood
-  
   
   #- intent: mood_curr
   #- action: action_answer_mood

@@ -32,7 +32,7 @@ slots:
     initial_value: ''
     influence_conversation: false
     mappings:
-    - type: from entity
+    - type: from_entity
       entity: mood_quadrant
   user_name_slot:
     type: text
