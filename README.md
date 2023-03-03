@@ -117,6 +117,7 @@ Check the file frontend/static/css/style.css to adapt the styling of the fronten
 
 The files in frontend/static/img are used to display the chatbot and the user inside the chat, as well as to display the chatbot when the chat is still closed at the start.
 
+You can use "\n" in your utterances in domain.yml to split an utterance into two separate messages.
 
 ## License
 

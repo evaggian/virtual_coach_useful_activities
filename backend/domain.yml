@@ -153,7 +153,7 @@ responses:
   utter_intro_session1_5:
   - text: "And don't worry, I'll also send you your activity in a message on Prolific right after this session ends."
   utter_intro_session1_6:
-  - text: "Please note that doing your recommended activity after this session is voluntary and does not impact your payment."
+  - text: "Please note that doing your recommended activity after this session is voluntary and does <span class='bolded'>not</span> impact your payment."
   utter_intro_session1_7:
   - buttons:
     - payload : /confirm_intro_session1
